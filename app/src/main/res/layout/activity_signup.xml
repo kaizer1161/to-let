@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="85"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/Signup_Username_EditText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/full_name"
+            android:inputType="text"
+            android:maxLength="29"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp" />
+
+        <EditText
+            android:id="@+id/Signup_Phone_EditText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Signup_Username_EditText_id"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:maxLength="29"
+            android:paddingBottom="16dp" />
+
+
+        <EditText
+            android:id="@+id/Signup_Email_EditText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Signup_Phone_EditText_id"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:maxLength="63"
+            android:paddingBottom="16dp" />
+
+        <EditText
+            android:id="@+id/Signup_Password_EditText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Signup_Email_EditText_id"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLength="30"
+            android:paddingBottom="16dp" />
+
+        <EditText
+            android:id="@+id/Signup_Password_ReEnter_EditText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Signup_Password_EditText_id"
+            android:hint="@string/re_enter_password"
+            android:inputType="textPassword"
+            android:maxLength="30"
+            android:paddingBottom="16dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15">
+
+        <ProgressBar
+            android:id="@+id/sign_up_progress_bar_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/nextToCategoryBtn_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_account" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+

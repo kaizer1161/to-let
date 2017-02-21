@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">tolet</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="email_successfully_send">Email successfully send</string>
+    <string name="email">Email</string>
+    <string name="password">password</string>
+    <string name="send_password">Send Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="signup_as_student">SIGNUP AS STUDENT</string>
+    <string name="back_from_recover_password">Back</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="full_name">Full Name</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="create_account">Create Account</string>
+</resources>
