@@ -7,5 +7,6 @@ package com.rent.afor.space.tolet.kaizer.tolet.model_data;
 public class Config {
 
     public static final String SIGNUP_URL = "http://tolet.artefactplus.com/signup.php";
+    public static final String LOGIN_URL = "http://tolet.artefactplus.com/login.php";
 
 }

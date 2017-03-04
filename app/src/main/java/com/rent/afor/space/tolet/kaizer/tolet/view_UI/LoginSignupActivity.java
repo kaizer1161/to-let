@@ -1,6 +1,8 @@
 package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentActivity;
@@ -40,7 +42,7 @@ public class LoginSignupActivity extends FragmentActivity {
     TextView createNewAccountBottomSheet;
     CoordinatorLayout loginSignupCoordinatorLayout;
     View bottomSheet;
-    BottomSheetBehavior<View> behavior;
+    BottomSheetBehavior<View> behaviorBottomSheet;
     EditText emailLogin, passwordLogin, userNameSignup, emailSignup, passwordSignup, rePasswordSignup, phoneNumberSighup;
     Button loginBtn, createAccountSignup;
     ProgressBar loginProgressBar, sighupProgressBar;
@@ -52,6 +54,47 @@ public class LoginSignupActivity extends FragmentActivity {
 
         initLoginViews();
         initSignUpViews();
+
+        behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                if (newState == BottomSheetBehavior.STATE_EXPANDED)
+                    bottomSheetEditTextVisibility("visible");
+                else
+                    bottomSheetEditTextVisibility("gone");
+
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+    }
+
+    private void bottomSheetEditTextVisibility(String state) {
+
+        if (state.equals("visible")) {
+
+            userNameSignup.setVisibility(View.VISIBLE);
+            emailSignup.setVisibility(View.VISIBLE);
+            passwordSignup.setVisibility(View.VISIBLE);
+            rePasswordSignup.setVisibility(View.VISIBLE);
+            phoneNumberSighup.setVisibility(View.VISIBLE);
+
+        } else if (state.equals("gone")) {
+
+            userNameSignup.setVisibility(View.GONE);
+            emailSignup.setVisibility(View.GONE);
+            passwordSignup.setVisibility(View.GONE);
+            rePasswordSignup.setVisibility(View.GONE);
+            phoneNumberSighup.setVisibility(View.GONE);
+
+        }
+
 
     }
 
@@ -79,7 +122,7 @@ public class LoginSignupActivity extends FragmentActivity {
         createNewAccountBottomSheet = (TextView) findViewById(R.id.login_create_new_account_bottom_sheet);
         loginSignupCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.login_signup_coordinator_layout);
         bottomSheet = loginSignupCoordinatorLayout.findViewById(R.id.fl_bottomSheet);
-        behavior = BottomSheetBehavior.from(bottomSheet);
+        behaviorBottomSheet = BottomSheetBehavior.from(bottomSheet);
 
         loginProgressBar = (ProgressBar) findViewById(R.id.login_progress_view_id);
 
@@ -89,21 +132,75 @@ public class LoginSignupActivity extends FragmentActivity {
 
         if (view == createNewAccountBottomSheet) {
 
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behaviorBottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+
 
         } else if (view == loginBtn) {
 
+            String email = emailLogin.getText().toString().trim();
+            String password = passwordSignup.getText().toString().trim();
+
+            if (isValidEmaillId(email))
+                loginUser(email, password);
+            else
+                emailLogin.setError("Invalid Email Address");
 
         } else if (view == createAccountSignup) {
-            //signUpNewUser();
 
-            validateUserInput();
-
-        }
+            validateSignUpUserInput();
 
         }
 
-    private void validateUserInput() {
+        }
+
+    private void loginUser(final String email, final String password) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Config.LOGIN_URL;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.v("Volly return : ", "" + response);
+
+                        if (response.equals("success")) {
+
+                            Intent intent = new Intent(LoginSignupActivity.this, DashBoard.class);
+                            startActivity(intent);
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v("Volly return : ", "" + error);
+            }
+
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(KEY_EMAIL, email);
+                params.put(KEY_PASSWORD, password);
+                return params;
+            }
+        };
+
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+
+    }
+
+    private void validateSignUpUserInput() {
 
         String username = userNameSignup.getText().toString().trim();
         String phone = phoneNumberSighup.getText().toString().trim();
@@ -114,23 +211,29 @@ public class LoginSignupActivity extends FragmentActivity {
 
         //condition for validation error message;
         if (username.trim().equals("")) {
+
             userNameSignup.setError("username required!");
+
         } else if (!isValidEmaillId(email.toString().trim())) {
-            //Toast.makeText(getApplicationContext(), "Valid Email Address.", Toast.LENGTH_SHORT).show();
-            //Toast.makeText(getApplicationContext(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
+
             emailSignup.setError("Invalid Email Address");
+
         } else if (email.trim().equals("")) {
+
             emailSignup.setError("email is missing!");
-            //Toast.makeText(SignupActivity.this, "email is missing!", Toast.LENGTH_SHORT).show();
+
         } else if (password.trim().equals("") || password.length() < 5) {
+
             passwordSignup.setError("password length should be greater than 4 or can't be blank");
-            //Toast.makeText(SignupActivity.this, "password length should be greater than 4 or can't be blank", Toast.LENGTH_SHORT).show();
+
         } else if (rePass.trim().equals("")) {
+
             rePasswordSignup.setError("can't be blank");
-            //Toast.makeText(SignupActivity.this, "can't be blank", Toast.LENGTH_SHORT).show();
+
         } else if (!password.equals(rePass)) {
+
             rePasswordSignup.setError("password doesn't matched");
-            //Toast.makeText(SignupActivity.this, "Password Doesn't Match", Toast.LENGTH_LONG).show();
+
         } else
             signUpNewUser(email, phone, username, password, deviceId);
     }
