@@ -1,4 +1,4 @@
-package com.rent.afor.space.tolet.kaizer.tolet;
+package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.rent.afor.space.tolet.kaizer.tolet.R;
 
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

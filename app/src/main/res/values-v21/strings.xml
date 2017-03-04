@@ -12,4 +12,11 @@
     <string name="hint_phone_number">Phone Number</string>
     <string name="hint_re_enter_password">Re-Enter Password</string>
     <string name="create_account">Create Account</string>
+    <string name="size_of_flat">Size of flat :</string>
+    <string name="no_of_bed">No of bed :</string>
+    <string name="no_of_bath">No of bath :</string>
+    <string name="price_of_flat">Asking price :</string>
+    <string name="floor_no">Floor :</string>
+    <string name="location">Location :</string>
+    <string name="other_info">Other Information :</string>
 </resources>

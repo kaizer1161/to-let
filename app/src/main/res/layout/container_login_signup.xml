@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_signup_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
-    tools:context="com.rent.afor.space.tolet.kaizer.tolet.view_UI.DashBoard">
+    tools:context="com.sample.bottomsheetsample.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -19,16 +20,26 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>-->
 
-    <include layout="@layout/content_dash_board" />
+    <include layout="@layout/login_activity_layout" />
 
-    <android.support.design.widget.FloatingActionButton
+    <include layout="@layout/signup_slide_up_panel_layout" />
+
+
+    <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@android:drawable/ic_dialog_email" />-->
+
+    <!-- Notice a few things:
+        app:layout_behavior="@string/bottom_sheet_behavior" required to act as bottom sheet
+        app:behavior_peekHeight="244dp" this is the collapsed state height
+        app:behavior_hideable="true" lets you swipe to dismiss the sheet
+        android:elevation="@dimen/design_appbar_elevation" puts the sheet over the action bar
+    -->
 
 </android.support.design.widget.CoordinatorLayout>
