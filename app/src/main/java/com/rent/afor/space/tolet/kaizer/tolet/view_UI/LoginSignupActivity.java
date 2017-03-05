@@ -56,6 +56,7 @@ public class LoginSignupActivity extends FragmentActivity {
         initSignUpViews();
 
         behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
@@ -63,7 +64,6 @@ public class LoginSignupActivity extends FragmentActivity {
                     bottomSheetEditTextVisibility("visible");
                 else
                     bottomSheetEditTextVisibility("gone");
-
 
             }
 
@@ -85,6 +85,9 @@ public class LoginSignupActivity extends FragmentActivity {
             rePasswordSignup.setVisibility(View.VISIBLE);
             phoneNumberSighup.setVisibility(View.VISIBLE);
 
+            emailLogin.setVisibility(View.GONE);
+            passwordLogin.setVisibility(View.GONE);
+
         } else if (state.equals("gone")) {
 
             userNameSignup.setVisibility(View.GONE);
@@ -92,6 +95,9 @@ public class LoginSignupActivity extends FragmentActivity {
             passwordSignup.setVisibility(View.GONE);
             rePasswordSignup.setVisibility(View.GONE);
             phoneNumberSighup.setVisibility(View.GONE);
+
+            emailLogin.setVisibility(View.VISIBLE);
+            passwordLogin.setVisibility(View.VISIBLE);
 
         }
 
@@ -109,6 +115,8 @@ public class LoginSignupActivity extends FragmentActivity {
         createAccountSignup = (Button) findViewById(R.id.create_account_Btn_id);
 
         sighupProgressBar = (ProgressBar) findViewById(R.id.sign_up_progress_bar_id);
+
+        bottomSheetEditTextVisibility("gone");
 
     }
 
@@ -139,9 +147,9 @@ public class LoginSignupActivity extends FragmentActivity {
         } else if (view == loginBtn) {
 
             String email = emailLogin.getText().toString().trim();
-            String password = passwordSignup.getText().toString().trim();
+            String password = passwordLogin.getText().toString().trim();
 
-            if (isValidEmaillId(email))
+            if (isValidEmailId(email))
                 loginUser(email, password);
             else
                 emailLogin.setError("Invalid Email Address");
@@ -166,9 +174,7 @@ public class LoginSignupActivity extends FragmentActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.v("Volly return : ", "" + response);
-
-                        if (response.equals("success")) {
+                        if (response.trim().equals("success")) {
 
                             Intent intent = new Intent(LoginSignupActivity.this, DashBoard.class);
                             startActivity(intent);
@@ -214,7 +220,7 @@ public class LoginSignupActivity extends FragmentActivity {
 
             userNameSignup.setError("username required!");
 
-        } else if (!isValidEmaillId(email.toString().trim())) {
+        } else if (!isValidEmailId(email)) {
 
             emailSignup.setError("Invalid Email Address");
 
@@ -280,7 +286,7 @@ public class LoginSignupActivity extends FragmentActivity {
     }
 
     //function for email validation;
-    private boolean isValidEmaillId(String email) {
+    private boolean isValidEmailId(String email) {
 
         return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
                 + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
