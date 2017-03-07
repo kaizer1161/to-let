@@ -18,10 +18,15 @@ import com.rent.afor.space.tolet.kaizer.tolet.R;
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG_JOB_FEED_FRAGMENT = "feed_fragment";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, new feedFragment(), TAG_JOB_FEED_FRAGMENT)
+                .commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

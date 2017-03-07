@@ -1,15 +1,22 @@
 package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentActivity;
+import android.transition.Slide;
+import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,6 +54,8 @@ public class LoginSignupActivity extends FragmentActivity {
     Button loginBtn, createAccountSignup;
     ProgressBar loginProgressBar, sighupProgressBar;
 
+    LinearLayout loginContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +66,20 @@ public class LoginSignupActivity extends FragmentActivity {
 
         behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
-                if (newState == BottomSheetBehavior.STATE_EXPANDED)
-                    bottomSheetEditTextVisibility("visible");
-                else
+                Slide slide = new Slide();
+                slide.setSlideEdge(Gravity.TOP);
+
+                ViewGroup root = (ViewGroup) findViewById(R.id.login_signup_coordinator_layout);
+                TransitionManager.beginDelayedTransition(root, slide);
+
+                bottomSheetEditTextVisibility("visible");
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED)
                     bottomSheetEditTextVisibility("gone");
+
 
             }
 
@@ -72,6 +88,16 @@ public class LoginSignupActivity extends FragmentActivity {
 
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (behaviorBottomSheet.getState() == BottomSheetBehavior.STATE_EXPANDED)
+            behaviorBottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        else
+            super.onBackPressed();
 
     }
 
@@ -85,8 +111,7 @@ public class LoginSignupActivity extends FragmentActivity {
             rePasswordSignup.setVisibility(View.VISIBLE);
             phoneNumberSighup.setVisibility(View.VISIBLE);
 
-            emailLogin.setVisibility(View.GONE);
-            passwordLogin.setVisibility(View.GONE);
+            loginContainer.setVisibility(View.GONE);
 
         } else if (state.equals("gone")) {
 
@@ -96,8 +121,7 @@ public class LoginSignupActivity extends FragmentActivity {
             rePasswordSignup.setVisibility(View.GONE);
             phoneNumberSighup.setVisibility(View.GONE);
 
-            emailLogin.setVisibility(View.VISIBLE);
-            passwordLogin.setVisibility(View.VISIBLE);
+            loginContainer.setVisibility(View.VISIBLE);
 
         }
 
@@ -121,6 +145,8 @@ public class LoginSignupActivity extends FragmentActivity {
     }
 
     private void initLoginViews() {
+
+        loginContainer = (LinearLayout) findViewById(R.id.login_view_container_id);
 
         loginBtn = (Button) findViewById(R.id.loginBtn_id);
 

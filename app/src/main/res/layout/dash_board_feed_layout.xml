@@ -12,7 +12,6 @@
         android:padding="10dp">
 
         <LinearLayout
-            android:id="@+id/job_feed_content_basic_layout_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -26,7 +25,6 @@
                 app:border_width="2dp" />
 
             <LinearLayout
-                android:id="@+id/text_Field_id"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -35,7 +33,7 @@
                 android:paddingLeft="16dp">
 
                 <TextView
-                    android:id="@+id/post_user_name_job_feed_id"
+                    android:id="@+id/user_name_feed_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="5dp"
@@ -45,7 +43,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/date_and_time_of_job_feed_post_id"
+                    android:id="@+id/date_and_time_of_feed_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="5dp"
@@ -152,7 +150,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/gender_preference_job_feed_id"
+                android:id="@+id/floor_feed_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -172,7 +170,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/location_job_feed_id"
+                android:id="@+id/location_feed_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -193,7 +191,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/additional_info_job_feed_id"
+                android:id="@+id/other_info_feed_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
