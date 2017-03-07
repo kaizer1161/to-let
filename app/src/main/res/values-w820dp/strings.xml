@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="email_successfully_send">Email successfully send</string>
+    <string name="app_name">To-let</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">password</string>
-    <string name="send_password">Send Password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="login">Login</string>
-    <string name="signup_as_student">SIGNUP AS STUDENT</string>
-    <string name="back_from_recover_password">Back</string>
-    <string name="create_new_account">Create new account</string>
     <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_full_name">Full Name</string>
     <string name="hint_re_enter_password">Re-Enter Password</string>
     <string name="create_account">Create Account</string>
     <string name="size_of_flat">Size of flat :</string>
@@ -19,4 +21,12 @@
     <string name="floor_no">Floor :</string>
     <string name="location">Location :</string>
     <string name="other_info">Other Information :</string>
+    <string name="hint_asking_price">Asking price of flat</string>
+    <string name="hint_size_of_flat">Size of flat</string>
+    <string name="hint_no_of_bed">No of bed in flat</string>
+    <string name="hint_no_of_bath">No of bath in flat</string>
+    <string name="hint_floor_of_flat">Floor</string>
+    <string name="hint_location">Location of flat</string>
+    <string name="hint_additional_info">Additional info</string>
+    <string name="create_new_account">CREATE ACCOUNT</string>
 </resources>

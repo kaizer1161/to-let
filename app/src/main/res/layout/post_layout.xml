@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="85"
+        android:gravity="center_vertical"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/asking_price_post_edit_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorAccent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/asking_price_post_Edit_Text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_asking_price"
+                android:inputType="number"
+                android:maxLength="29"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:textColorHint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/size_of_flat_post_edit_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/asking_price_post_edit_text_input_layout"
+            android:textColorHint="@color/colorAccent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/size_of_flat_post_edit_text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_size_of_flat"
+                android:inputType="number"
+                android:maxLength="29"
+                android:paddingBottom="16dp"
+                android:textColorHint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/no_of_bed_post_edit_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/size_of_flat_post_edit_text_input_layout"
+            android:textColorHint="@color/colorAccent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/no_of_bed_post_edit_text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_no_of_bed"
+                android:inputType="number"
+                android:maxLength="63"
+                android:paddingBottom="16dp"
+                android:textColorHint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/no_of_bath_post_edit_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/no_of_bed_post_edit_text_input_layout"
+            android:textColorHint="@color/colorAccent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/no_of_bath_post_edit_text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_no_of_bath"
+                android:inputType="number"
+                android:maxLength="30"
+                android:paddingBottom="16dp"
+                android:textColorHint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/floor_post_edit_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/no_of_bath_post_edit_text_input_layout"
+            android:textColorHint="@color/colorAccent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/floor_post_edit_text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_floor_of_flat"
+                android:inputType="number"
+                android:maxLength="30"
+                android:paddingBottom="16dp"
+                android:textColorHint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/location_post_edit_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/floor_post_edit_text_input_layout"
+            android:textColorHint="@color/colorAccent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/location_post_edit_text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_location"
+                android:inputType="textAutoCorrect"
+                android:maxLength="30"
+                android:paddingBottom="16dp"
+                android:textColorHint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/additional_info_post_edit_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/location_post_edit_text_input_layout"
+            android:textColorHint="@color/colorAccent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/additional_info_post_edit_text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_additional_info"
+                android:inputType="textAutoCorrect"
+                android:maxLength="30"
+                android:paddingBottom="16dp"
+                android:textColorHint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

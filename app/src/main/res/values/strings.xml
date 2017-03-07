@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Tolet</string>
+    <string name="app_name">To-let</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -20,4 +21,12 @@
     <string name="floor_no">Floor :</string>
     <string name="location">Location :</string>
     <string name="other_info">Other Information :</string>
+    <string name="hint_asking_price">Asking price of flat</string>
+    <string name="hint_size_of_flat">Size of flat</string>
+    <string name="hint_no_of_bed">No of bed in flat</string>
+    <string name="hint_no_of_bath">No of bath in flat</string>
+    <string name="hint_floor_of_flat">Floor</string>
+    <string name="hint_location">Location of flat</string>
+    <string name="hint_additional_info">Additional info</string>
+    <string name="create_new_account">CREATE ACCOUNT</string>
 </resources>

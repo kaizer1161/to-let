@@ -33,13 +33,13 @@
             android:gravity="center_vertical">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/username_signup_edit_text_input_layout"
+                android:id="@+id/asking_price_post_edit_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/colorAccent">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/signup_Username_EditText_id"
+                    android:id="@+id/asking_price_post_Edit_Text_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_full_name"
@@ -53,14 +53,14 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/phone_signup_edit_text_input_layout"
+                android:id="@+id/size_of_flat_post_edit_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/username_signup_edit_text_input_layout"
+                android:layout_below="@+id/asking_price_post_edit_text_input_layout"
                 android:textColorHint="@color/colorAccent">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/signup_Phone_EditText_id"
+                    android:id="@+id/size_of_flat_post_edit_text_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_phone_number"
@@ -72,17 +72,17 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/email_signup_edit_text_input_layout"
+                android:id="@+id/no_of_bed_post_edit_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/phone_signup_edit_text_input_layout"
+                android:layout_below="@+id/size_of_flat_post_edit_text_input_layout"
                 android:textColorHint="@color/colorAccent">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/signup_Email_EditText_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/signup_Phone_EditText_id"
+                    android:layout_below="@id/size_of_flat_post_edit_text_id"
                     android:hint="@string/hint_email"
                     android:inputType="textEmailAddress"
                     android:maxLength="63"
@@ -93,10 +93,10 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/password_signup_edit_text_input_layout"
+                android:id="@+id/no_of_bath_post_edit_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/email_signup_edit_text_input_layout"
+                android:layout_below="@+id/no_of_bed_post_edit_text_input_layout"
                 android:textColorHint="@color/colorAccent">
 
                 <android.support.design.widget.TextInputEditText
@@ -113,10 +113,10 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/re_enter_password_signup_edit_text_input_layout"
+                android:id="@+id/floor_post_edit_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/password_signup_edit_text_input_layout"
+                android:layout_below="@+id/no_of_bath_post_edit_text_input_layout"
                 android:textColorHint="@color/colorAccent">
 
                 <android.support.design.widget.TextInputEditText

@@ -130,11 +130,11 @@ public class LoginSignupActivity extends FragmentActivity {
 
     private void initSignUpViews() {
 
-        userNameSignup = (EditText) findViewById(R.id.signup_Username_EditText_id);
+        userNameSignup = (EditText) findViewById(R.id.asking_price_post_Edit_Text_id);
         emailSignup = (EditText) findViewById(R.id.signup_Email_EditText_id);
         passwordSignup = (EditText) findViewById(R.id.signup_Password_EditText_id);
         rePasswordSignup = (EditText) findViewById(R.id.signup_Password_ReEnter_EditText_id);
-        phoneNumberSighup = (EditText) findViewById(R.id.signup_Phone_EditText_id);
+        phoneNumberSighup = (EditText) findViewById(R.id.size_of_flat_post_edit_text_id);
 
         createAccountSignup = (Button) findViewById(R.id.create_account_Btn_id);
 
@@ -197,6 +197,7 @@ public class LoginSignupActivity extends FragmentActivity {
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onResponse(String response) {
 
