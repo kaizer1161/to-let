@@ -33,14 +33,14 @@ import java.util.ArrayList;
  * Created by kaizer on 3/6/17.
  */
 
-public class feedFragment extends android.support.v4.app.Fragment {
+public class FeedFragment extends android.support.v4.app.Fragment {
 
     SwipeRefreshLayout swipeRefreshLayout;
     FeedAdapter feedAdapter;
     RecyclerView recyclerView;
     View rootView;
 
-    public feedFragment() {
+    public FeedFragment() {
         super();
     }
 
@@ -64,6 +64,8 @@ public class feedFragment extends android.support.v4.app.Fragment {
 
         showFeed(feed);
         fetchFeedData();
+
+        ((DashBoard) getActivity()).showFloatingActionButton();
 
         return rootView;
     }

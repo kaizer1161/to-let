@@ -17,7 +17,7 @@ import com.rent.afor.space.tolet.kaizer.tolet.R;
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG_JOB_FEED_FRAGMENT = "feed_fragment";
+    private static final String TAG_FEED_FRAGMENT = "feed_fragment";
 
     private FloatingActionButton fab;
 
@@ -26,7 +26,7 @@ public class DashBoard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, new feedFragment(), TAG_JOB_FEED_FRAGMENT)
+        getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
                 .commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -52,10 +52,16 @@ public class DashBoard extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     public void hideFloatingActionButton() {
         fab.hide();
+    }
+
+    public void showFloatingActionButton() {
+        fab.show();
     }
 
     @Override
@@ -64,7 +70,14 @@ public class DashBoard extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
+            FeedFragment feedFragment = (FeedFragment) getSupportFragmentManager().findFragmentByTag(TAG_FEED_FRAGMENT);
+
+            if (feedFragment != null && feedFragment.isVisible())
+                super.onBackPressed();
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
+                    .commit();
         }
     }
 
