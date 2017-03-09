@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -80,7 +81,6 @@ public class LoginSignupActivity extends FragmentActivity {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED)
                     bottomSheetEditTextVisibility("gone");
 
-
             }
 
             @Override
@@ -141,6 +141,7 @@ public class LoginSignupActivity extends FragmentActivity {
         sighupProgressBar = (ProgressBar) findViewById(R.id.sign_up_progress_bar_id);
 
         bottomSheetEditTextVisibility("gone");
+        sighupProgressBar.setVisibility(View.GONE);
 
     }
 
@@ -160,6 +161,8 @@ public class LoginSignupActivity extends FragmentActivity {
 
         loginProgressBar = (ProgressBar) findViewById(R.id.login_progress_view_id);
 
+        loginProgressBar.setVisibility(View.GONE);
+
     }
 
     public void loginSignupBtnClicked(View view) {
@@ -168,25 +171,34 @@ public class LoginSignupActivity extends FragmentActivity {
 
             behaviorBottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-
-
         } else if (view == loginBtn) {
+
+            loginProgressBar.setVisibility(View.VISIBLE);
+            loginBtn.setVisibility(View.GONE);
 
             String email = emailLogin.getText().toString().trim();
             String password = passwordLogin.getText().toString().trim();
 
             if (isValidEmailId(email))
                 loginUser(email, password);
-            else
+            else {
+
+                loginProgressBar.setVisibility(View.GONE);
+                loginBtn.setVisibility(View.VISIBLE);
+
                 emailLogin.setError("Invalid Email Address");
+
+            }
 
         } else if (view == createAccountSignup) {
 
+            sighupProgressBar.setVisibility(View.VISIBLE);
+            createAccountSignup.setVisibility(View.GONE);
             validateSignUpUserInput();
 
         }
 
-        }
+    }
 
     private void loginUser(final String email, final String password) {
 
@@ -203,8 +215,17 @@ public class LoginSignupActivity extends FragmentActivity {
 
                         if (response.trim().equals("success")) {
 
+                            loginProgressBar.setVisibility(View.GONE);
+                            loginBtn.setVisibility(View.VISIBLE);
                             Intent intent = new Intent(LoginSignupActivity.this, DashBoard.class);
                             startActivity(intent);
+                            finish();
+
+                        } else {
+
+                            loginProgressBar.setVisibility(View.GONE);
+                            loginBtn.setVisibility(View.VISIBLE);
+                            Toast.makeText(getBaseContext(), "Invalid Email or password", Toast.LENGTH_LONG).show();
 
                         }
 
@@ -212,7 +233,11 @@ public class LoginSignupActivity extends FragmentActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("Volly return : ", "" + error);
+
+                loginProgressBar.setVisibility(View.GONE);
+                loginBtn.setVisibility(View.VISIBLE);
+                Toast.makeText(getBaseContext(), "Error " + error, Toast.LENGTH_LONG).show();
+
             }
 
         }) {
@@ -245,26 +270,38 @@ public class LoginSignupActivity extends FragmentActivity {
         //condition for validation error message;
         if (username.trim().equals("")) {
 
+            createAccountSignup.setVisibility(View.VISIBLE);
+            sighupProgressBar.setVisibility(View.GONE);
             userNameSignup.setError("username required!");
 
         } else if (!isValidEmailId(email)) {
 
+            createAccountSignup.setVisibility(View.VISIBLE);
+            sighupProgressBar.setVisibility(View.GONE);
             emailSignup.setError("Invalid Email Address");
 
         } else if (email.trim().equals("")) {
 
+            createAccountSignup.setVisibility(View.VISIBLE);
+            sighupProgressBar.setVisibility(View.GONE);
             emailSignup.setError("email is missing!");
 
         } else if (password.trim().equals("") || password.length() < 5) {
 
+            createAccountSignup.setVisibility(View.VISIBLE);
+            sighupProgressBar.setVisibility(View.GONE);
             passwordSignup.setError("password length should be greater than 4 or can't be blank");
 
         } else if (rePass.trim().equals("")) {
 
+            createAccountSignup.setVisibility(View.VISIBLE);
+            sighupProgressBar.setVisibility(View.GONE);
             rePasswordSignup.setError("can't be blank");
 
         } else if (!password.equals(rePass)) {
 
+            createAccountSignup.setVisibility(View.VISIBLE);
+            sighupProgressBar.setVisibility(View.GONE);
             rePasswordSignup.setError("password doesn't matched");
 
         } else
