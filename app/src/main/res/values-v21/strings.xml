@@ -29,4 +29,7 @@
     <string name="hint_location">Location of flat</string>
     <string name="hint_additional_info">Additional info</string>
     <string name="create_new_account">CREATE ACCOUNT</string>
+    <string name="menu_post">Post</string>
+    <string name="rent_feed">Rent Feed</string>
+    <string name="profile">Profile</string>
 </resources>

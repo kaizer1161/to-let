@@ -63,7 +63,7 @@ public class FeedFragment extends android.support.v4.app.Fragment {
         feed.add(new FeedContent("", " ", " ", " ", " ", " ", " ", " ", " ", " "));
 
         showFeed(feed);
-        fetchFeedData();
+        //fetchFeedData();
 
         ((DashBoard) getActivity()).showFloatingActionButton();
 
@@ -133,7 +133,7 @@ public class FeedFragment extends android.support.v4.app.Fragment {
 
             JSONObject json = result.getJSONObject(i);
 
-            feed[i] = new FeedContent("", json.optString(Config.USER_NAME), json.optString(Config.STATUS_TIME), json.optString(Config.PRICE), json.optString(Config.SIZE_OF_FLAT), json.optString(Config.NO_OF_BED), json.optString(Config.NO_OF_BATH), json.optString(Config.FLOOR), json.optString(Config.LOCATION), json.optString(Config.OTHER_INFORMATION));
+            feed[i] = new FeedContent("", json.optString(Config.USER_NAME), json.optString(Config.STATUS_TIME), json.optString(Config.KEY_PRICE), json.optString(Config.KEY_SIZE_OF_FLAT), json.optString(Config.KEY_NO_OF_BED), json.optString(Config.KEY_NO_OF_BATH), json.optString(Config.KEY_FLOOR), json.optString(Config.KEY_LOCATION), json.optString(Config.KEY_OTHER_INFORMATION));
 
         }
 
