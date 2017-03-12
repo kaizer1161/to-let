@@ -25,12 +25,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
     private LayoutInflater inflater;
     private Activity context;
     private ArrayList<FeedContent> feed;
+    private View rootView;
 
-    public FeedAdapter(Activity context, ArrayList<FeedContent> feed) {
+    public FeedAdapter(Activity context, ArrayList<FeedContent> feed, View rootView) {
 
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.feed = feed;
+        this.rootView = rootView;
 
     }
 
@@ -148,7 +150,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
             callBtn = (LinearLayout) itemView.findViewById(R.id.call_feed_id);
             commentBtn = (LinearLayout) itemView.findViewById(R.id.comment_feed_id);
 
-            commentCoordinatorLayout = (CoordinatorLayout) itemView.findViewById(R.id.feed_coordinator_layout);
+            commentCoordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.feed_coordinator_layout);
             bottomSheet = commentCoordinatorLayout.findViewById(R.id.comment_bottomSheet);
             behaviorBottomSheet = BottomSheetBehavior.from(bottomSheet);
 

@@ -74,7 +74,7 @@ public class FeedFragment extends android.support.v4.app.Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.dashBoard_feed_RecyclerView_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        feedAdapter = new FeedAdapter(getActivity(), feed);
+        feedAdapter = new FeedAdapter(getActivity(), feed, rootView);
         recyclerView.setAdapter(feedAdapter);
 
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
