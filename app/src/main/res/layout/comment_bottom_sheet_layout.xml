@@ -9,6 +9,15 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/comment_header_bottom_sheet"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Comments" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/comment_bottomSheet_recycler_view_id"
         android:layout_width="match_parent"
@@ -29,8 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginLeft="20dp"
             android:layout_weight="1" />
 
         <ImageView
