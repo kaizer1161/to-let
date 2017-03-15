@@ -1,6 +1,7 @@
 package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,12 +41,6 @@ import java.util.regex.Pattern;
  */
 
 public class LoginSignupActivity extends FragmentActivity {
-
-    public static final String KEY_EMAIL = "email";
-    public static final String KEY_PHONE = "phone";
-    public static final String KEY_USERNAME = "name";
-    public static final String KEY_PASSWORD = "password";
-    public static final String KEY_DEVICE_ID = "device_id";
 
     TextView createNewAccountBottomSheet;
     CoordinatorLayout loginSignupCoordinatorLayout;
@@ -213,13 +208,15 @@ public class LoginSignupActivity extends FragmentActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        if (response.trim().equals("success")) {
+                        if (!response.trim().equals("fail")) {
 
-                            loginProgressBar.setVisibility(View.GONE);
-                            loginBtn.setVisibility(View.VISIBLE);
-                            Intent intent = new Intent(LoginSignupActivity.this, DashBoard.class);
-                            startActivity(intent);
-                            finish();
+                            if (storeValueInSharedPreference(email, response)) {
+
+                                loginProgressBar.setVisibility(View.GONE);
+                                loginBtn.setVisibility(View.VISIBLE);
+                                startDashBoard();
+
+                            }
 
                         } else {
 
@@ -245,8 +242,8 @@ public class LoginSignupActivity extends FragmentActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KEY_EMAIL, email);
-                params.put(KEY_PASSWORD, password);
+                params.put(Config.KEY_USER_EMAIL, email);
+                params.put(Config.KEY_USER_PASSWORD, password);
                 return params;
             }
         };
@@ -255,6 +252,25 @@ public class LoginSignupActivity extends FragmentActivity {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+
+    }
+
+    private boolean storeValueInSharedPreference(String email, String userName) {
+
+        SharedPreferences sp = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(Config.SP_LOGED_IN, true);
+        editor.putString(Config.SP_EMAIL, email);
+        editor.putString(Config.SP_USERNAME, userName);
+        return editor.commit();
+
+    }
+
+    private void startDashBoard() {
+
+        Intent intent = new Intent(LoginSignupActivity.this, DashBoard.class);
+        startActivity(intent);
+        finish();
 
     }
 
@@ -321,12 +337,22 @@ public class LoginSignupActivity extends FragmentActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.v("Volly return : ", "" + response);
+
+                        if (storeValueInSharedPreference(email, userName)) {
+
+                            createAccountSignup.setVisibility(View.VISIBLE);
+                            sighupProgressBar.setVisibility(View.GONE);
+                            startDashBoard();
+
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("Volly return : ", "" + error);
+                createAccountSignup.setVisibility(View.VISIBLE);
+                sighupProgressBar.setVisibility(View.GONE);
+                Log.v("Volly return : ", " " + error);
             }
 
         }) {
@@ -334,11 +360,11 @@ public class LoginSignupActivity extends FragmentActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KEY_EMAIL, email);
-                params.put(KEY_PHONE, phone);
-                params.put(KEY_USERNAME, userName);
-                params.put(KEY_PASSWORD, password);
-                params.put(KEY_DEVICE_ID, device_id);
+                params.put(Config.KEY_USER_EMAIL, email);
+                params.put(Config.KEY_USER_PHONE, phone);
+                params.put(Config.KEY_USERNAME, userName);
+                params.put(Config.KEY_USER_PASSWORD, password);
+                params.put(Config.KEY_DEVICE_ID, device_id);
                 return params;
             }
         };

@@ -140,7 +140,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
             locationOfFlat.setError("Location Of flat required!");
 
         } else
-            makePost("3rd@gmail.com", price, size, bed, bath, floorNo, location, additional);
+            makePost("1st@gmail.com", price, size, bed, bath, floorNo, location, additional);
     }
 
     private void makePost(final String email, final String price, final String size, final String bed, final String bath, final String floorNo, final String location, final String additional) {

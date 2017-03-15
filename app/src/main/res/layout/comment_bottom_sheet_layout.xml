@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/comment_bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff000"
-    android:elevation="@dimen/design_appbar_elevation"
+    android:background="@drawable/comment_bottom_sheet_background"
+    android:orientation="vertical"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comment_bottomSheet_recycler_view_id"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-</FrameLayout>
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_edit_text"
+        android:elevation="40dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/comment_edit_text_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/comment_send_btn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@drawable/ic_send_black_48dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

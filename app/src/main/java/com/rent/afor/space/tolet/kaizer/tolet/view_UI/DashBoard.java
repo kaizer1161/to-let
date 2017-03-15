@@ -18,6 +18,8 @@ public class DashBoard extends AppCompatActivity
 
     private static final String TAG_FEED_FRAGMENT = "feed_fragment";
 
+    private FeedFragment feedFragment = new FeedFragment();
+
     private FloatingActionButton fab;
 
     @Override
@@ -25,7 +27,7 @@ public class DashBoard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
+        getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
                 .commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,13 +72,21 @@ public class DashBoard extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
 
-            FeedFragment feedFragment = (FeedFragment) getSupportFragmentManager().findFragmentByTag(TAG_FEED_FRAGMENT);
+            feedFragment = (FeedFragment) getSupportFragmentManager().findFragmentByTag(TAG_FEED_FRAGMENT);
 
-            if (feedFragment != null && feedFragment.isVisible())
-                super.onBackPressed();
+            if (feedFragment != null && feedFragment.isVisible()) {
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
-                    .commit();
+                if (feedFragment.commentBottomSheetStateIsExpanded()) {
+
+                    feedFragment.commentBottomSheetCollapse();
+                    showFloatingActionButton();
+
+                } else
+                    super.onBackPressed();
+            } else
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
+                        .commit();
+
         }
     }
 

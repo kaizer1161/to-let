@@ -1,9 +1,12 @@
 package com.rent.afor.space.tolet.kaizer.tolet.controller_adapter;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +14,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.rent.afor.space.tolet.kaizer.tolet.R;
+import com.rent.afor.space.tolet.kaizer.tolet.model_data.CommentContent;
+import com.rent.afor.space.tolet.kaizer.tolet.model_data.Config;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.FeedContent;
+import com.rent.afor.space.tolet.kaizer.tolet.view_UI.DashBoard;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by kaizer on 3/6/17.
@@ -26,6 +45,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
     private Activity context;
     private ArrayList<FeedContent> feed;
     private View rootView;
+    private FeedAdapterHolder holder;
 
     public FeedAdapter(Activity context, ArrayList<FeedContent> feed, View rootView) {
 
@@ -46,6 +66,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
 
         FeedContent item = feed.get(position);
 
+        this.holder = holder;
+
         holder.userName.setText(item.getUserName());
         holder.dateAndTime.setText(item.getDateAndTime());
         holder.priceOfFlat.setText(item.getPriceOfFlat());
@@ -55,6 +77,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
         holder.floorNo.setText(item.getFloorNo());
         holder.addressOfFlat.setText(item.getAddressOfFlat());
         holder.otherInfo.setText(item.getOtherInfo());
+        holder.postId = item.getPostId();
 
     }
 
@@ -73,6 +96,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
 
     }
 
+    public boolean behaviorBottomSheetStateExpanded() {
+
+        return holder.behaviorBottomSheet.getState() == BottomSheetBehavior.STATE_EXPANDED;
+
+    }
+
+    public void changeBehaviorBottomSheetToCollapse() {
+        holder.behaviorBottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
     public class FeedAdapterHolder extends RecyclerView.ViewHolder {
 
 
@@ -82,7 +115,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
 
         private CoordinatorLayout commentCoordinatorLayout;
         private View bottomSheet;
+
         private BottomSheetBehavior<View> behaviorBottomSheet;
+
+        private CommentAdapter commentAdapter;
+        private RecyclerView recyclerView;
+        private String postId;
 
         public FeedAdapterHolder(View itemView) {
             super(itemView);
@@ -99,30 +137,30 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
-                    manager.beginTransaction().add(R.id.content_dash_board, new CommentFragment())
-                            .commit();*/
 
+                    fetchCommentData();
                     behaviorBottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    ((DashBoard) context).hideFloatingActionButton();
+
+                    ArrayList<CommentContent> comment = new ArrayList<>();
+                    comment.add(new CommentContent("", " ", " ", " "));
+
+                    recyclerView = (RecyclerView) rootView.findViewById(R.id.comment_bottomSheet_recycler_view_id);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    commentAdapter = new CommentAdapter(context, comment, rootView, postId);
+                    recyclerView.setAdapter(commentAdapter);
 
                 }
             });
 
-            /*behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 
-                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
-                    *//*Slide slide = new Slide();
-                    slide.setSlideEdge(Gravity.TOP);
-
-                    ViewGroup root = (ViewGroup) findViewById(R.id.login_signup_coordinator_layout);
-                    TransitionManager.beginDelayedTransition(root, slide);*//*
-
-
                     if (newState == BottomSheetBehavior.STATE_COLLAPSED)
-                        bottomSheetEditTextVisibility("gone");
+                        ((DashBoard) context).showFloatingActionButton();
 
                 }
 
@@ -130,10 +168,80 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
                 }
-            });*/
+            });
 
 
         }
+
+        private void fetchCommentData() {
+
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = Config.FETCH_COMMENT_URL;
+
+            // Request a string response from the provided URL.
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            if (!response.trim().equals("")) {
+
+                                try {
+
+                                    commentAdapter.itemUpdated(statusValue(response));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.v("Volly return : ", "" + error);
+                }
+
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put(Config.KEY_COMMENT_POST_ID, postId);
+                    return params;
+                }
+            };
+
+
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+
+        }
+
+        private CommentContent[] statusValue(String response) throws JSONException {
+
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(Config.COMMENT_ARRAY);
+
+            //Log.v("result", "value : " + result.length());
+
+            CommentContent[] feed = new CommentContent[result.length()];
+
+            for (int i = 0; i < result.length(); i++) {
+
+                JSONObject json = result.getJSONObject(i);
+
+                feed[i] = new CommentContent("", json.optString(Config.KEY_USERNAME), json.optString(Config.STATUS_TIME),
+                        json.optString(Config.COMMENT_CONTENT));
+
+            }
+
+            return feed;
+
+        }
+
 
         private void initFeedViews(View itemView) {
 
