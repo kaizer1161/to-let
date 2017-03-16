@@ -1,5 +1,7 @@
 package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.rent.afor.space.tolet.kaizer.tolet.R;
+import com.rent.afor.space.tolet.kaizer.tolet.model_data.Config;
 
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -21,6 +24,22 @@ public class DashBoard extends AppCompatActivity
     private FeedFragment feedFragment = new FeedFragment();
 
     private FloatingActionButton fab;
+
+    private SharedPreferences preferences;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //see if the user is logged in shared memory
+        //then redirect to dashboard
+        if (!(getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE).getBoolean(Config.SP_LOGED_IN, false))) {
+            Intent intent = new Intent(this, LoginSignupActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,9 +145,18 @@ public class DashBoard extends AppCompatActivity
         } else if (id == R.id.nav_bar_profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new ProfileFragment())
                     .commit();
-        } /*else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.logout_nav_id) {
 
-        } else if (id == R.id.nav_manage) {
+            preferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(Config.SP_LOGED_IN, false);
+            editor.apply();
+
+            Intent intent = new Intent(this, LoginSignupActivity.class);
+            startActivity(intent);
+            finish();
+
+        } /*else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
