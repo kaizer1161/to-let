@@ -4,10 +4,10 @@
     <corners
         android:topLeftRadius="@dimen/comment_radius"
         android:topRightRadius="@dimen/comment_radius" />
-    <solid android:color="@color/colorPrimaryDark" />
+    <solid android:color="@color/textBackground" />
 
     <stroke
         android:width="2dp"
-        android:color="@color/colorPrimaryLight" />
+        android:color="@color/colorPrimary" />
 
 </shape>

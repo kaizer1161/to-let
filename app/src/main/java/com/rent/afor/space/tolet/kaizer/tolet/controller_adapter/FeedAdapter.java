@@ -141,6 +141,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
                     fetchCommentData();
                     behaviorBottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
                     ((DashBoard) context).hideFloatingActionButton();
+                    ((DashBoard) context).getSupportActionBar().hide();
 
                     ArrayList<CommentContent> comment = new ArrayList<>();
                     comment.add(new CommentContent("", " ", " ", " "));
@@ -159,8 +160,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
-                    if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                    if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                         ((DashBoard) context).showFloatingActionButton();
+                        ((DashBoard) context).getSupportActionBar().show();
+                    }
 
                 }
 

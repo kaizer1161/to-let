@@ -99,6 +99,7 @@ public class DashBoard extends AppCompatActivity
 
                     feedFragment.commentBottomSheetCollapse();
                     showFloatingActionButton();
+                    getSupportActionBar().show();
 
                 } else
                     super.onBackPressed();
