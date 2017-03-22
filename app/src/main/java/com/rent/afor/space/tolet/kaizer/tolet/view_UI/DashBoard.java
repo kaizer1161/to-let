@@ -145,18 +145,9 @@ public class DashBoard extends AppCompatActivity
         } else if (id == R.id.nav_bar_profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new ProfileFragment())
                     .commit();
-        } else if (id == R.id.logout_nav_id) {
+        } /*else if (id == R.id.logout_nav_id) {
 
-            preferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(Config.SP_LOGED_IN, false);
-            editor.apply();
-
-            Intent intent = new Intent(this, LoginSignupActivity.class);
-            startActivity(intent);
-            finish();
-
-        } /*else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
@@ -167,5 +158,19 @@ public class DashBoard extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
+    }
+
+    public void logoutClicked(View view) {
+
+        preferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Config.SP_LOGED_IN, false);
+        editor.apply();
+
+        Intent intent = new Intent(this, LoginSignupActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 }

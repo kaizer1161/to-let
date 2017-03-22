@@ -4,7 +4,7 @@
     android:id="@+id/login_signup_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image_background_9"
+    android:background="@drawable/login_background"
     android:fitsSystemWindows="true"
     tools:context="com.sample.bottomsheetsample.MainActivity">
 

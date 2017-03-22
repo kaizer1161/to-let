@@ -28,8 +28,8 @@
                 android:id="@+id/nav_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_gravity="start"
+                android:layout_weight="1"
                 android:fitsSystemWindows="true"
                 app:headerLayout="@layout/nav_header_dash_board"
                 app:menu="@menu/activity_dash_board_drawer">
@@ -51,19 +51,20 @@
                     android:background="@color/colorPrimary"/>
 
                 <LinearLayout
-                    android:padding="16dp"
+                    android:id="@+id/logout_nav_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:onClick="logoutClicked"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/logout_nav_id"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="LOGOUT"/>
@@ -76,10 +77,10 @@
                     </LinearLayout>
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        app:border_width="2dp"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@mipmap/ic_launcher"/>
+                        android:src="@mipmap/ic_launcher"
+                        app:border_width="2dp" />
 
                 </LinearLayout>
 

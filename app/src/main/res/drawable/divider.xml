@@ -15,5 +15,4 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <size android:height="10dp" />
-    <solid android:color="@color/divider" />
 </shape>

@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#607D8B</color>
-    <color name="colorPrimaryDark">#455A64</color>
+
+    <!--<color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#1995AD</color>
     <color name="colorPrimaryLight">#CFD8DC</color>
-    <color name="colorAccent">#9E9E9E</color>
+    <color name="colorAccent">#CB0000</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorPrimarySecondaryText">#757575</color>
     <color name="icons">#FFFFFF</color>
-    <color name="divider">#BDBDBD</color>
+    <color name="textBackground">#BCBABE</color>-->
+
+    <!--<color name="colorPrimary">#9B26AF</color>
+    <color name="colorPrimaryDark">#7A1EA1</color>
+    <color name="colorPrimaryLight">#CFD8DC</color>
+    <color name="colorAccent">#68EFAD</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorPrimarySecondaryText">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="card_view_background">#BCBABE</color>
+    <color name="textBackground">#EEEBD9</color>-->
+
+    <color name="colorPrimary">#900C3F</color>
+    <color name="colorPrimaryDark">#581845</color>
+    <color name="colorPrimaryLight">#CFD8DC</color>
+    <color name="colorAccent">#3AEA94</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorPrimarySecondaryText">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="card_view_background">#BCBABE</color>
+    <color name="textBackground">#EEEBD9</color>
+
 </resources>
