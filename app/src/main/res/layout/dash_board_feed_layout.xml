@@ -65,16 +65,44 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/price_of_flat"
-                android:textStyle="bold" />
+                android:layout_weight="50"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/price_of_flat_feed_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price_of_flat"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/price_of_flat_feed_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/size_of_flat"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/size_of_flat_feed_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -85,57 +113,45 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/size_of_flat"
-                android:textStyle="bold" />
+                android:layout_weight="33"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/size_of_flat_feed_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_of_bed"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/no_of_bed_feed_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/no_of_bed"
-                android:textStyle="bold" />
+                android:layout_weight="33"
+                android:orientation="horizontal"
+                android:paddingRight="10dp">
 
-            <TextView
-                android:id="@+id/no_of_bed_feed_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_of_bath"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/no_of_bath_feed_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            </LinearLayout>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_of_bath"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/no_of_bath_feed_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -158,6 +174,7 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
