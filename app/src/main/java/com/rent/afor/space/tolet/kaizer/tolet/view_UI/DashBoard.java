@@ -20,8 +20,10 @@ public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG_FEED_FRAGMENT = "feed_fragment";
+    private static final String TAG_PROFILE_FRAGMENT = "profile_fragment";
 
     private FeedFragment feedFragment = new FeedFragment();
+    private ProfileFragment profileFragment = new ProfileFragment();
 
     private FloatingActionButton fab;
 
@@ -59,7 +61,7 @@ public class DashBoard extends AppCompatActivity
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new PostFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, profileFragment, TAG_PROFILE_FRAGMENT).commit();
 
             }
         });
@@ -92,6 +94,7 @@ public class DashBoard extends AppCompatActivity
         } else {
 
             feedFragment = (FeedFragment) getSupportFragmentManager().findFragmentByTag(TAG_FEED_FRAGMENT);
+            profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(TAG_PROFILE_FRAGMENT);
 
             if (feedFragment != null && feedFragment.isVisible()) {
 
@@ -103,11 +106,28 @@ public class DashBoard extends AppCompatActivity
 
                 } else
                     super.onBackPressed();
-            } else
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
+
+            } else if (profileFragment != null && profileFragment.isVisible()) {
+
+                if (profileFragment.commentBottomSheetStateIsExpanded()) {
+
+                    profileFragment.commentBottomSheetCollapse();
+                    showFloatingActionButton();
+                    getSupportActionBar().show();
+
+                } else
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_PROFILE_FRAGMENT)
+                            .commit();
+
+            } else {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
                         .commit();
+            }
 
         }
+
+
     }
 
     /*@Override
@@ -142,9 +162,10 @@ public class DashBoard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_bar_rent_feed_id) {
-            // Handle the camera action
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
+                    .commit();
         } else if (id == R.id.nav_bar_profile) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new ProfileFragment())
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, profileFragment, TAG_PROFILE_FRAGMENT)
                     .commit();
         } /*else if (id == R.id.logout_nav_id) {
 

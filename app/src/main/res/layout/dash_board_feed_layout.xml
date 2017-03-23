@@ -80,9 +80,11 @@
                 <TextView
                     android:id="@+id/price_of_flat_feed_id"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp" />
 
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -99,10 +101,10 @@
                 <TextView
                     android:id="@+id/size_of_flat_feed_id"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -128,7 +130,8 @@
                 <TextView
                     android:id="@+id/no_of_bed_feed_id"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp" />
 
             </LinearLayout>
 
@@ -148,10 +151,39 @@
                 <TextView
                     android:id="@+id/no_of_bath_feed_id"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp" />
 
             </LinearLayout>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/floor_no"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/floor_feed_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -165,16 +197,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/floor_no"
+                android:text="@string/available_date"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/floor_feed_id"
+                android:id="@+id/date_to_book_flat_feed_id"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="7-Feb-2017" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -192,7 +225,8 @@
             <TextView
                 android:id="@+id/location_feed_id"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp" />
 
         </LinearLayout>
 
@@ -213,7 +247,8 @@
             <TextView
                 android:id="@+id/other_info_feed_id"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp" />
 
         </LinearLayout>
 

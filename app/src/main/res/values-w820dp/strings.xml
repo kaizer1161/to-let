@@ -32,4 +32,5 @@
     <string name="menu_post">Post</string>
     <string name="rent_feed">Rent Feed</string>
     <string name="profile">Profile</string>
+    <string name="available_date">Available from :</string>
 </resources>
