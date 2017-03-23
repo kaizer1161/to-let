@@ -33,4 +33,6 @@
     <string name="rent_feed">Rent Feed</string>
     <string name="profile">Profile</string>
     <string name="available_date">Available from :</string>
+    <string name="profile_time_line">Timeline</string>
+    <string name="personalInfo">Personal Info</string>
 </resources>

@@ -261,7 +261,7 @@ public class ProfileFeedAdapter extends RecyclerView.Adapter<ProfileFeedAdapter.
             callBtn = (LinearLayout) itemView.findViewById(R.id.call_feed_id);
             commentBtn = (LinearLayout) itemView.findViewById(R.id.comment_feed_id);
 
-            commentCoordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.profile_coordinator_id);
+            commentCoordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.profile_coordinator_layout);
             bottomSheet = commentCoordinatorLayout.findViewById(R.id.comment_bottomSheet);
             behaviorBottomSheet = BottomSheetBehavior.from(bottomSheet);
 

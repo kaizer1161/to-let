@@ -34,23 +34,23 @@ import java.util.ArrayList;
  * Created by kaizer on 3/10/17.
  */
 
-public class ProfileFragment extends Fragment {
+public class ProfileTimeLineFragment extends Fragment {
 
     SwipeRefreshLayout swipeRefreshLayout;
     ProfileFeedAdapter profileFeedAdapter;
     RecyclerView recyclerView;
     View rootView;
 
-    public ProfileFragment() {
+    public ProfileTimeLineFragment() {
 
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.profile_layout, container, false);
+        rootView = inflater.inflate(R.layout.prolife_timeline_layout, container, false);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.profile_swipe_refresh_layout_id);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.profile_swipe_refresh_layout);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment {
 
     private void showFeed(ArrayList<FeedContent> feed) {
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.profile_recycler_view_id);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.profile_RecyclerView_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         profileFeedAdapter = new ProfileFeedAdapter(getActivity(), feed, rootView);
         recyclerView.setAdapter(profileFeedAdapter);
