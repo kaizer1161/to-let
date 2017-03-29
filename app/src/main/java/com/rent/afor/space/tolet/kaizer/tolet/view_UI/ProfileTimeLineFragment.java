@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.rent.afor.space.tolet.kaizer.tolet.R;
-import com.rent.afor.space.tolet.kaizer.tolet.controller_adapter.ProfileFeedAdapter;
+import com.rent.afor.space.tolet.kaizer.tolet.controller_adapter.ProfileTimeLineAdapter;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.Config;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.FeedContent;
 
@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class ProfileTimeLineFragment extends Fragment {
 
     SwipeRefreshLayout swipeRefreshLayout;
-    ProfileFeedAdapter profileFeedAdapter;
+    ProfileTimeLineAdapter profileTimeLineAdapter;
     RecyclerView recyclerView;
     View rootView;
 
@@ -74,8 +74,8 @@ public class ProfileTimeLineFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.profile_RecyclerView_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        profileFeedAdapter = new ProfileFeedAdapter(getActivity(), feed, rootView);
-        recyclerView.setAdapter(profileFeedAdapter);
+        profileTimeLineAdapter = new ProfileTimeLineAdapter(getActivity(), feed);
+        recyclerView.setAdapter(profileTimeLineAdapter);
 
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
         recyclerView.addItemDecoration(new ItemDecorator(dividerDrawable));
@@ -97,7 +97,7 @@ public class ProfileTimeLineFragment extends Fragment {
                         if (!response.trim().equals("")) {
 
                             try {
-                                profileFeedAdapter.itemUpdated(statusValue(response));
+                                profileTimeLineAdapter.itemUpdated(statusValue(response));
                                 swipeRefreshLayout.setRefreshing(false);
 
                             } catch (JSONException e) {
@@ -138,18 +138,6 @@ public class ProfileTimeLineFragment extends Fragment {
         }
 
         return feed;
-
-    }
-
-    public boolean commentBottomSheetStateIsExpanded() {
-
-        return profileFeedAdapter.behaviorBottomSheetStateExpanded();
-
-    }
-
-    public void commentBottomSheetCollapse() {
-
-        profileFeedAdapter.changeBehaviorBottomSheetToCollapse();
 
     }
 

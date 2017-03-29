@@ -14,19 +14,19 @@ import com.rent.afor.space.tolet.kaizer.tolet.model_data.FeedContent;
 import com.rent.afor.space.tolet.kaizer.tolet.view_UI.DashBoard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
- * Created by kaizer on 3/6/17.
+ * Created by kaizer on 3/23/17.
  */
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHolder> {
+public class ProfileTimeLineAdapter extends RecyclerView.Adapter<ProfileTimeLineAdapter.ProfileFeedAdapterHolder> {
 
     private LayoutInflater inflater;
     private Activity context;
     private ArrayList<FeedContent> feed;
+    private ProfileTimeLineAdapter.ProfileFeedAdapterHolder holder;
 
-    public FeedAdapter(Activity context, ArrayList<FeedContent> feed) {
+    public ProfileTimeLineAdapter(Activity context, ArrayList<FeedContent> feed) {
 
         inflater = LayoutInflater.from(context);
         this.context = context;
@@ -35,14 +35,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
     }
 
     @Override
-    public FeedAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new FeedAdapterHolder(inflater.inflate(R.layout.dash_board_feed_layout, parent, false));
+    public ProfileTimeLineAdapter.ProfileFeedAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ProfileTimeLineAdapter.ProfileFeedAdapterHolder(inflater.inflate(R.layout.dash_board_feed_layout, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(FeedAdapterHolder holder, int position) {
+    public void onBindViewHolder(ProfileTimeLineAdapter.ProfileFeedAdapterHolder holder, int position) {
 
         FeedContent item = feed.get(position);
+
+        this.holder = holder;
 
         holder.userName.setText(item.getUserName());
         holder.dateAndTime.setText(item.getDateAndTime());
@@ -65,22 +67,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
     public void itemUpdated(FeedContent[] items) {
 
         feed.clear();
-        Collections.addAll(feed, items);
+        for (int i = 0; i < items.length; i++)
+            feed.add(items[i]);
 
         notifyDataSetChanged();
 
     }
 
-    class FeedAdapterHolder extends RecyclerView.ViewHolder {
+    public class ProfileFeedAdapterHolder extends RecyclerView.ViewHolder {
 
 
         private ImageView userPic;
         private TextView userName, dateAndTime, priceOfFlat, sizeOfFlat, noOfBed, noOfBath, floorNo, addressOfFlat, otherInfo;
         private LinearLayout callBtn, commentBtn;
-
         private String postId;
 
-        FeedAdapterHolder(View itemView) {
+        public ProfileFeedAdapterHolder(View itemView) {
             super(itemView);
 
             initFeedViews(itemView);
@@ -103,6 +105,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
 
         }
 
+
         private void initFeedViews(View itemView) {
 
             userPic = (ImageView) itemView.findViewById(R.id.user_pro_pic_id);
@@ -120,5 +123,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
 
         }
 
+
     }
+
 }

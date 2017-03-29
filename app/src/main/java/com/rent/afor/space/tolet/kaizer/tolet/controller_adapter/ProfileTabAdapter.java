@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.rent.afor.space.tolet.kaizer.tolet.R;
+import com.rent.afor.space.tolet.kaizer.tolet.view_UI.ProfilePersonalInfo;
 import com.rent.afor.space.tolet.kaizer.tolet.view_UI.ProfileTimeLineFragment;
 
 /**
@@ -26,7 +27,7 @@ public class ProfileTabAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return new ProfileTimeLineFragment();
         } else {
-            return new ProfileTimeLineFragment();
+            return new ProfilePersonalInfo();
         }
 
     }

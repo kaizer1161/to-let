@@ -35,4 +35,9 @@
     <string name="available_date">Available from :</string>
     <string name="profile_time_line">Timeline</string>
     <string name="personalInfo">Personal Info</string>
+    <string name="personal_info">Personal info :</string>
+    <string name="change_password">Change password :</string>
+    <string name="hint_old_password">Old password</string>
+    <string name="hint_new_password">New password</string>
+    <string name="hint_confirm_password">Confirm new password</string>
 </resources>

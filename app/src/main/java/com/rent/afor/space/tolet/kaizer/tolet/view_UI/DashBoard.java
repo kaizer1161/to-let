@@ -3,18 +3,45 @@ package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.rent.afor.space.tolet.kaizer.tolet.R;
+import com.rent.afor.space.tolet.kaizer.tolet.controller_adapter.CommentAdapter;
+import com.rent.afor.space.tolet.kaizer.tolet.model_data.CommentContent;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.Config;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -22,12 +49,17 @@ public class DashBoard extends AppCompatActivity
     private static final String TAG_FEED_FRAGMENT = "feed_fragment";
     private static final String TAG_PROFILE_TAB_FRAGMENT = "profile_tab_fragment";
 
+    private BottomSheetBehavior<View> behaviorBottomSheet;
+
+    private CommentAdapter commentAdapter;
+
     private FeedFragment feedFragment = new FeedFragment();
-    private ProfileTabFragment profileTabFragment = new ProfileTabFragment();
 
     private FloatingActionButton fab;
 
-    private SharedPreferences preferences;
+    private String postId;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onStart() {
@@ -48,8 +80,34 @@ public class DashBoard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
+        sharedPreferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+
+        TextView userName = (TextView) findViewById(R.id.nav_bar_user_name_id);
+        userName.setText(sharedPreferences.getString(Config.SP_USERNAME, ""));
+
         getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
                 .commit();
+
+        /*Local variables*/
+        final EditText commentEditText = (EditText) findViewById(R.id.comment_edit_text_id);
+        ImageView commentSendBtn = (ImageView) findViewById(R.id.comment_send_btn_id);
+
+        CoordinatorLayout commentCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.dash_board_coordinator_layout);
+        View bottomSheet = commentCoordinatorLayout.findViewById(R.id.comment_bottomSheet);
+        behaviorBottomSheet = BottomSheetBehavior.from(bottomSheet);
+
+        commentSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (!commentEditText.getText().toString().equals(""))
+                    addComment(sharedPreferences.getString(Config.SP_EMAIL, ""), commentEditText.getText().toString(), postId);
+
+            }
+        });
+
+        behaviorBottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,6 +133,22 @@ public class DashBoard extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    showFloatingActionButton();
+                }
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
 
     }
 
@@ -94,36 +168,20 @@ public class DashBoard extends AppCompatActivity
         } else {
 
             feedFragment = (FeedFragment) getSupportFragmentManager().findFragmentByTag(TAG_FEED_FRAGMENT);
-            profileTabFragment = (ProfileTabFragment) getSupportFragmentManager().findFragmentByTag(TAG_PROFILE_TAB_FRAGMENT);
 
-            if (feedFragment != null && feedFragment.isVisible()) {
+            if (behaviorBottomSheet.getState() == BottomSheetBehavior.STATE_EXPANDED) {
 
-                if (feedFragment.commentBottomSheetStateIsExpanded()) {
+                behaviorBottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-                    feedFragment.commentBottomSheetCollapse();
-                    showFloatingActionButton();
-                    getSupportActionBar().show();
+            } else if (feedFragment != null && feedFragment.isVisible()) {
 
-                } else
-                    super.onBackPressed();
+                super.onBackPressed();
 
-            } else if (profileTabFragment != null && profileTabFragment.isVisible()) {
+            } else
 
-                /*if (profileTabFragment.commentBottomSheetStateIsExpanded()) {
-
-                    profileTabFragment.commentBottomSheetCollapse();
-                    showFloatingActionButton();
-                    getSupportActionBar().show();
-
-                } else */
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_PROFILE_TAB_FRAGMENT)
-                            .commit();
-
-            } else {
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
                         .commit();
-            }
+
 
         }
 
@@ -162,7 +220,7 @@ public class DashBoard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_bar_rent_feed_id) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
                     .commit();
         } else if (id == R.id.nav_bar_profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new ProfileTabFragment(), TAG_PROFILE_TAB_FRAGMENT)
@@ -185,7 +243,7 @@ public class DashBoard extends AppCompatActivity
 
     public void logoutClicked(View view) {
 
-        preferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(Config.SP_LOGED_IN, false);
         editor.apply();
@@ -195,4 +253,132 @@ public class DashBoard extends AppCompatActivity
         finish();
 
     }
+
+    public void commentBtnIsClicked(String postId) {
+
+        this.postId = postId;
+        fetchCommentData(postId);
+        behaviorBottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+        hideFloatingActionButton();
+
+        ArrayList<CommentContent> comment = new ArrayList<>();
+        comment.add(new CommentContent("", " ", " ", " "));
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.comment_bottomSheet_recycler_view_id);
+        recyclerView.setLayoutManager(new LinearLayoutManager(DashBoard.this));
+        commentAdapter = new CommentAdapter(DashBoard.this, comment, postId);
+        recyclerView.setAdapter(commentAdapter);
+
+    }
+
+    private void fetchCommentData(final String postId) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(DashBoard.this);
+        String url = Config.FETCH_COMMENT_URL;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (!response.trim().equals("")) {
+
+                            try {
+
+                                commentAdapter.itemUpdated(statusValue(response));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v("Volly return : ", "" + error);
+            }
+
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(Config.KEY_COMMENT_POST_ID, postId);
+                return params;
+            }
+        };
+
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
+    private CommentContent[] statusValue(String response) throws JSONException {
+
+        JSONObject jsonObject = new JSONObject(response);
+        JSONArray result = jsonObject.getJSONArray(Config.COMMENT_ARRAY);
+
+        //Log.v("result", "value : " + result.length());
+
+        CommentContent[] feed = new CommentContent[result.length()];
+
+        for (int i = 0; i < result.length(); i++) {
+
+            JSONObject json = result.getJSONObject(i);
+
+            feed[i] = new CommentContent("", json.optString(Config.KEY_USERNAME), json.optString(Config.STATUS_TIME),
+                    json.optString(Config.COMMENT_CONTENT));
+
+        }
+
+        return feed;
+
+    }
+
+    private void addComment(final String email, final String comment, final String postId) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(DashBoard.this);
+        String url = Config.POST_COMMENT_URL;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        Toast.makeText(DashBoard.this, " " + response, Toast.LENGTH_LONG).show();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.v("Volly return : ", " " + error);
+            }
+
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(Config.KEY_USER_EMAIL, email);
+                params.put(Config.COMMENT_CONTENT, comment);
+                params.put(Config.KEY_COMMENT_POST_ID, postId);
+                return params;
+            }
+        };
+
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
 }

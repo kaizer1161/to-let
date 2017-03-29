@@ -87,6 +87,5 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/comment_bottom_sheet_layout" />
 
 </android.support.design.widget.CoordinatorLayout>
