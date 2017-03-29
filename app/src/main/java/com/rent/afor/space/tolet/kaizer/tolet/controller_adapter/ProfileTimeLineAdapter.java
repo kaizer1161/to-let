@@ -76,23 +76,16 @@ public class ProfileTimeLineAdapter extends RecyclerView.Adapter<ProfileTimeLine
 
     public class ProfileFeedAdapterHolder extends RecyclerView.ViewHolder {
 
-
         private ImageView userPic;
         private TextView userName, dateAndTime, priceOfFlat, sizeOfFlat, noOfBed, noOfBath, floorNo, addressOfFlat, otherInfo;
         private LinearLayout callBtn, commentBtn;
         private String postId;
+        private View verticalLineCommentCall;
 
         public ProfileFeedAdapterHolder(View itemView) {
             super(itemView);
 
             initFeedViews(itemView);
-
-            callBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
 
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,9 +113,12 @@ public class ProfileTimeLineAdapter extends RecyclerView.Adapter<ProfileTimeLine
             otherInfo = (TextView) itemView.findViewById(R.id.other_info_feed_id);
             callBtn = (LinearLayout) itemView.findViewById(R.id.call_feed_id);
             commentBtn = (LinearLayout) itemView.findViewById(R.id.comment_feed_id);
+            verticalLineCommentCall = itemView.findViewById(R.id.view_vertical_line_comment_call_id);
+
+            callBtn.setVisibility(View.GONE);
+            verticalLineCommentCall.setVisibility(View.GONE);
 
         }
-
 
     }
 

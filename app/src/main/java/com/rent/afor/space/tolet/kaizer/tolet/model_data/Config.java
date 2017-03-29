@@ -13,6 +13,7 @@ public class Config {
 
     public static final String JSON_ARRAY = "job_post";
     public static final String COMMENT_ARRAY = "comments";
+    public static final String PROFILE_TIMELINE_ARRAY = "user_timeline_post";
 
     public static final String COMMENT_CONTENT = "comment";
 
@@ -40,5 +41,6 @@ public class Config {
     public static final String LOGIN_URL = "http://tolet.artefactplus.com/login.php";
     public static final String FETCH_FEED_URL = "http://tolet.artefactplus.com/newsfeed.php";
     public static final String POST_FEED_URL = "http://tolet.artefactplus.com/post.php";
+    public static final String PROFILE_TIMELINE_FEED_URL = "http://tolet.artefactplus.com/userpost.php";
 
 }

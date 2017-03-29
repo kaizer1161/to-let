@@ -61,6 +61,8 @@ public class DashBoard extends AppCompatActivity
 
     private SharedPreferences sharedPreferences;
 
+    private NavigationView navigationView;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -120,6 +122,7 @@ public class DashBoard extends AppCompatActivity
                         .setAction("Action", null).show();*/
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new PostFragment()).commit();
+                navigationView.setCheckedItem(R.id.nav_bar_post);
 
             }
         });
@@ -130,8 +133,9 @@ public class DashBoard extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_bar_rent_feed_id);
 
         behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 
@@ -177,10 +181,13 @@ public class DashBoard extends AppCompatActivity
 
                 super.onBackPressed();
 
-            } else
+            } else {
 
+                navigationView.setCheckedItem(R.id.nav_bar_rent_feed_id);
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
                         .commit();
+
+            }
 
 
         }
@@ -220,14 +227,20 @@ public class DashBoard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_bar_rent_feed_id) {
+
             getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new FeedFragment(), TAG_FEED_FRAGMENT)
                     .commit();
+
         } else if (id == R.id.nav_bar_profile) {
+
             getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new ProfileTabFragment(), TAG_PROFILE_TAB_FRAGMENT)
                     .commit();
-        } /*else if (id == R.id.logout_nav_id) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_bar_post) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_dash_board, new PostFragment()).commit();
+
+        } /*else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 

@@ -3,6 +3,7 @@ package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +42,7 @@ public class FeedFragment extends android.support.v4.app.Fragment {
     View rootView;
 
     public FeedFragment() {
-        super();
+
     }
 
     @Nullable
@@ -63,6 +64,9 @@ public class FeedFragment extends android.support.v4.app.Fragment {
         feed.add(new FeedContent("", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "));
 
         showFeed(feed);
+
+        recyclerView.setVisibility(View.GONE);
+
         fetchFeedData();
 
         ((DashBoard) getActivity()).showFloatingActionButton();
@@ -98,12 +102,17 @@ public class FeedFragment extends android.support.v4.app.Fragment {
 
                             try {
                                 feedAdapter.itemUpdated(statusValue(response));
+                                recyclerView.setVisibility(View.VISIBLE);
                                 swipeRefreshLayout.setRefreshing(false);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
+                        } else {
+
+                            Snackbar.make(rootView, "No post to show", Snackbar.LENGTH_LONG)
+                                    .show();
                         }
 
                     }

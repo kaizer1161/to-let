@@ -1,5 +1,7 @@
 package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,6 +32,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by kaizer on 3/10/17.
@@ -63,6 +68,9 @@ public class ProfileTimeLineFragment extends Fragment {
         feed.add(new FeedContent("", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "));
 
         showFeed(feed);
+
+        recyclerView.setVisibility(View.GONE);
+
         fetchFeedData();
 
         ((DashBoard) getActivity()).showFloatingActionButton();
@@ -86,7 +94,9 @@ public class ProfileTimeLineFragment extends Fragment {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = Config.FETCH_FEED_URL;
+        String url = Config.PROFILE_TIMELINE_FEED_URL;
+
+        final SharedPreferences sharedPreferences = getContext().getSharedPreferences(Config.SP_TOLET_APP, Context.MODE_PRIVATE);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -98,6 +108,7 @@ public class ProfileTimeLineFragment extends Fragment {
 
                             try {
                                 profileTimeLineAdapter.itemUpdated(statusValue(response));
+                                recyclerView.setVisibility(View.VISIBLE);
                                 swipeRefreshLayout.setRefreshing(false);
 
                             } catch (JSONException e) {
@@ -113,7 +124,14 @@ public class ProfileTimeLineFragment extends Fragment {
                 Log.v("Volly return : ", "" + error);
             }
 
-        });
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(Config.KEY_USER_EMAIL, sharedPreferences.getString(Config.SP_EMAIL, ""));
+                return params;
+            }
+        };
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
@@ -123,7 +141,7 @@ public class ProfileTimeLineFragment extends Fragment {
     private FeedContent[] statusValue(String response) throws JSONException {
 
         JSONObject jsonObject = new JSONObject(response);
-        JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
+        JSONArray result = jsonObject.getJSONArray(Config.PROFILE_TIMELINE_ARRAY);
 
         //Log.v("result", "value : " + result.length());
 
