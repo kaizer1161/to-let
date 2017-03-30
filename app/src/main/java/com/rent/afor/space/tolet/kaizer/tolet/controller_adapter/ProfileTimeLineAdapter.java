@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.rent.afor.space.tolet.kaizer.tolet.R;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.FeedContent;
 import com.rent.afor.space.tolet.kaizer.tolet.view_UI.DashBoard;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,9 @@ public class ProfileTimeLineAdapter extends RecyclerView.Adapter<ProfileTimeLine
         FeedContent item = feed.get(position);
 
         this.holder = holder;
+
+        if (!item.getUserPic().equals(""))
+            Picasso.with(context).load(item.getUserPic()).into(holder.userPic);
 
         holder.userName.setText(item.getUserName());
         holder.dateAndTime.setText(item.getDateAndTime());

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.rent.afor.space.tolet.kaizer.tolet.R;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.FeedContent;
 import com.rent.afor.space.tolet.kaizer.tolet.view_UI.DashBoard;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
     public void onBindViewHolder(FeedAdapterHolder holder, int position) {
 
         FeedContent item = feed.get(position);
+
+        if (!item.getUserPic().equals(""))
+            Picasso.with(context).load(item.getUserPic()).into(holder.userPic);
 
         holder.userName.setText(item.getUserName());
         holder.dateAndTime.setText(item.getDateAndTime());
