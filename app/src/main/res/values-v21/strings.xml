@@ -41,4 +41,5 @@
     <string name="hint_new_password">New password</string>
     <string name="hint_confirm_password">Confirm new password</string>
     <string name="no_post_to_show">No post to show</string>
+    <string name="select_date_to_rent_flat">Select rent date :</string>
 </resources>

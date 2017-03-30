@@ -338,13 +338,18 @@ public class LoginSignupActivity extends FragmentActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
 
-                        if (storeValueInSharedPreference(email, userName)) {
+                        if (response.equals("success")) {
 
-                            createAccountSignup.setVisibility(View.VISIBLE);
-                            sighupProgressBar.setVisibility(View.GONE);
-                            startDashBoard();
+                            if (storeValueInSharedPreference(email, userName)) {
 
-                        }
+                                createAccountSignup.setVisibility(View.VISIBLE);
+                                sighupProgressBar.setVisibility(View.GONE);
+                                startDashBoard();
+
+                            }
+
+                        } else
+                            Toast.makeText(LoginSignupActivity.this, "Email already exists", Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {

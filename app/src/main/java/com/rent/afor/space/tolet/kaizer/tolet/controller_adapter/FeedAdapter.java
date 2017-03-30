@@ -57,6 +57,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
         holder.floorNo.setText(item.getFloorNo());
         holder.addressOfFlat.setText(item.getAddressOfFlat());
         holder.otherInfo.setText(item.getOtherInfo());
+        holder.flatAvailableTime.setText(item.getFlatAvailableTime());
         holder.postId = item.getPostId();
 
     }
@@ -79,7 +80,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
 
 
         private ImageView userPic;
-        private TextView userName, dateAndTime, priceOfFlat, sizeOfFlat, noOfBed, noOfBath, floorNo, addressOfFlat, otherInfo;
+        private TextView userName, dateAndTime, priceOfFlat, sizeOfFlat, noOfBed, noOfBath, floorNo, addressOfFlat, otherInfo, flatAvailableTime;
         private LinearLayout callBtn, commentBtn;
 
         private String postId;
@@ -121,6 +122,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
             otherInfo = (TextView) itemView.findViewById(R.id.other_info_feed_id);
             callBtn = (LinearLayout) itemView.findViewById(R.id.call_feed_id);
             commentBtn = (LinearLayout) itemView.findViewById(R.id.comment_feed_id);
+            flatAvailableTime = (TextView) itemView.findViewById(R.id.rent_date_id);
 
         }
 

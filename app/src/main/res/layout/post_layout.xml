@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
         <android.support.design.widget.TextInputLayout
@@ -34,7 +33,6 @@
             android:id="@+id/size_of_flat_post_edit_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/asking_price_post_edit_text_input_layout"
             android:textColorHint="@color/colorAccent">
 
             <android.support.design.widget.TextInputEditText
@@ -53,7 +51,6 @@
             android:id="@+id/no_of_bed_post_edit_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/size_of_flat_post_edit_text_input_layout"
             android:textColorHint="@color/colorAccent">
 
             <android.support.design.widget.TextInputEditText
@@ -73,7 +70,6 @@
             android:id="@+id/no_of_bath_post_edit_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/no_of_bed_post_edit_text_input_layout"
             android:textColorHint="@color/colorAccent">
 
             <android.support.design.widget.TextInputEditText
@@ -92,7 +88,6 @@
             android:id="@+id/floor_post_edit_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/no_of_bath_post_edit_text_input_layout"
             android:textColorHint="@color/colorAccent">
 
             <android.support.design.widget.TextInputEditText
@@ -111,7 +106,6 @@
             android:id="@+id/location_post_edit_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/floor_post_edit_text_input_layout"
             android:textColorHint="@color/colorAccent">
 
             <android.support.design.widget.TextInputEditText
@@ -130,7 +124,6 @@
             android:id="@+id/additional_info_post_edit_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/location_post_edit_text_input_layout"
             android:textColorHint="@color/colorAccent">
 
             <android.support.design.widget.TextInputEditText
@@ -145,6 +138,23 @@
 
         </android.support.design.widget.TextInputLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/select_date_to_rent_flat"
+            android:textStyle="bold" />
+
+        <DatePicker
+            android:id="@+id/date_to_rent_flat_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/card_view_background">
+
+        </DatePicker>
+
+
+    </LinearLayout>
 
 </ScrollView>

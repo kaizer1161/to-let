@@ -19,7 +19,7 @@ public class FeedContent {
     private String postId;
     private String flatAvailableTime;
 
-    public FeedContent(String userPic, String userName, String dateAndTime, String priceOfFlat, String sizeOfFlat, String noOfBed, String noOfBath, String floorNo, String addressOfFlat, String otherInfo, String postId) {
+    public FeedContent(String userPic, String userName, String dateAndTime, String priceOfFlat, String sizeOfFlat, String noOfBed, String noOfBath, String floorNo, String addressOfFlat, String otherInfo, String postId, String flatAvailableTime) {
 
         this.userPic = userPic;
         this.userName = userName;
@@ -32,6 +32,8 @@ public class FeedContent {
         this.addressOfFlat = addressOfFlat;
         this.otherInfo = otherInfo;
         this.postId = postId;
+        this.flatAvailableTime = flatAvailableTime;
+
 
     }
 

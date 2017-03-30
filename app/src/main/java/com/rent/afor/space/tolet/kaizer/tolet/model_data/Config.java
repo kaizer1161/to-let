@@ -31,6 +31,7 @@ public class Config {
     public static final String KEY_FLOOR = "floor";
     public static final String KEY_LOCATION = "address_of_flat";
     public static final String KEY_OTHER_INFORMATION = "content";
+    public static final String KEY_RENT_DATE = "date_to_rent";
     public static final String STATUS_TIME = "created_at";
     public static final String KEY_POST_ID = "id";
 

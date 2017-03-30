@@ -86,7 +86,7 @@ public class ProfileTimeLineFragment extends Fragment {
         });
 
         ArrayList<FeedContent> feed = new ArrayList<>();
-        feed.add(new FeedContent("", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "));
+        feed.add(new FeedContent("", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "));
 
         showFeed(feed);
 
@@ -190,7 +190,7 @@ public class ProfileTimeLineFragment extends Fragment {
 
             JSONObject json = result.getJSONObject(i);
 
-            feed[i] = new FeedContent(json.optString(Config.KEY_USER_IMAGE), json.optString(Config.KEY_USERNAME), json.optString(Config.STATUS_TIME), json.optString(Config.KEY_PRICE), json.optString(Config.KEY_SIZE_OF_FLAT), json.optString(Config.KEY_NO_OF_BED), json.optString(Config.KEY_NO_OF_BATH), json.optString(Config.KEY_FLOOR), json.optString(Config.KEY_LOCATION), json.optString(Config.KEY_OTHER_INFORMATION), json.optString(Config.KEY_POST_ID));
+            feed[i] = new FeedContent(json.optString(Config.KEY_USER_IMAGE), json.optString(Config.KEY_USERNAME), json.optString(Config.STATUS_TIME), json.optString(Config.KEY_PRICE), json.optString(Config.KEY_SIZE_OF_FLAT), json.optString(Config.KEY_NO_OF_BED), json.optString(Config.KEY_NO_OF_BATH), json.optString(Config.KEY_FLOOR), json.optString(Config.KEY_LOCATION), json.optString(Config.KEY_OTHER_INFORMATION), json.optString(Config.KEY_POST_ID), json.optString(Config.KEY_RENT_DATE));
 
         }
 
@@ -220,7 +220,7 @@ public class ProfileTimeLineFragment extends Fragment {
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
