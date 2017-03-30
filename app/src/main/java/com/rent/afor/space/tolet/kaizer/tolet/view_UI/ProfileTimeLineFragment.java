@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,10 +43,12 @@ import java.util.Map;
 
 public class ProfileTimeLineFragment extends Fragment {
 
-    SwipeRefreshLayout swipeRefreshLayout;
-    ProfileTimeLineAdapter profileTimeLineAdapter;
-    RecyclerView recyclerView;
-    View rootView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ProfileTimeLineAdapter profileTimeLineAdapter;
+    private RecyclerView recyclerView;
+    private View rootView;
+    private ImageView userImage;
+    private TextView userName;
 
     public ProfileTimeLineFragment() {
 
@@ -55,7 +59,10 @@ public class ProfileTimeLineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.prolife_timeline_layout, container, false);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.profile_swipe_refresh_layout);
+        initLayout(rootView);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(Config.SP_TOLET_APP, Context.MODE_PRIVATE);
+        userName.setText(sharedPreferences.getString(Config.SP_USERNAME, ""));
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -76,6 +83,14 @@ public class ProfileTimeLineFragment extends Fragment {
         ((DashBoard) getActivity()).showFloatingActionButton();
 
         return rootView;
+    }
+
+    private void initLayout(View rootView) {
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.profile_swipe_refresh_layout);
+        userImage = (ImageView) rootView.findViewById(R.id.user_Image_View_id);
+        userName = (TextView) rootView.findViewById(R.id.text_View_User_Name_id);
+
     }
 
     private void showFeed(ArrayList<FeedContent> feed) {

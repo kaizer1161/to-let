@@ -1,5 +1,6 @@
 package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,6 +65,8 @@ public class DashBoard extends AppCompatActivity
 
     private NavigationView navigationView;
 
+    private EditText commentEditText;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -82,39 +86,37 @@ public class DashBoard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
-        sharedPreferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
-
-        TextView userName = (TextView) findViewById(R.id.nav_bar_user_name_id);
-        userName.setText(sharedPreferences.getString(Config.SP_USERNAME, ""));
-
-        getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
-                .commit();
-
         /*Local variables*/
-        final EditText commentEditText = (EditText) findViewById(R.id.comment_edit_text_id);
+        sharedPreferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+        TextView userName = (TextView) findViewById(R.id.nav_bar_user_name_id);
+        commentEditText = (EditText) findViewById(R.id.comment_edit_text_id);
         ImageView commentSendBtn = (ImageView) findViewById(R.id.comment_send_btn_id);
 
         CoordinatorLayout commentCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.dash_board_coordinator_layout);
         View bottomSheet = commentCoordinatorLayout.findViewById(R.id.comment_bottomSheet);
         behaviorBottomSheet = BottomSheetBehavior.from(bottomSheet);
 
-        commentSendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (!commentEditText.getText().toString().equals(""))
-                    addComment(sharedPreferences.getString(Config.SP_EMAIL, ""), commentEditText.getText().toString(), postId);
-
-            }
-        });
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_bar_rent_feed_id);
 
         behaviorBottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        userName.setText(sharedPreferences.getString(Config.SP_USERNAME, ""));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.content_dash_board, feedFragment, TAG_FEED_FRAGMENT)
+                .commit();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,15 +129,15 @@ public class DashBoard extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        commentSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_bar_rent_feed_id);
+                if (!commentEditText.getText().toString().equals(""))
+                    addComment(sharedPreferences.getString(Config.SP_EMAIL, ""), commentEditText.getText().toString(), postId);
+
+            }
+        });
 
         behaviorBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 
@@ -368,12 +370,20 @@ public class DashBoard extends AppCompatActivity
 
                         Toast.makeText(DashBoard.this, " " + response, Toast.LENGTH_LONG).show();
 
+                        if (response.equals("success")) {
+
+                            fetchCommentData(postId);
+                            commentEditText.setText("");
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.v("Volly return : ", " " + error);
+                Toast.makeText(DashBoard.this, " " + error, Toast.LENGTH_LONG).show();
             }
 
         }) {
