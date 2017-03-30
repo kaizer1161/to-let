@@ -22,6 +22,7 @@ public class Config {
     public static final String KEY_USER_PHONE = "phone";
     public static final String KEY_USERNAME = "name";
     public static final String KEY_DEVICE_ID = "device_id";
+    public static final String KEY_USER_IMAGE = "profile_pic";
 
     public static final String KEY_PRICE = "price";
     public static final String KEY_SIZE_OF_FLAT = "size_of_flat";
@@ -36,6 +37,7 @@ public class Config {
     public static final String KEY_COMMENT_POST_ID = "post_id";
 
     public static final String SIGNUP_URL = "http://tolet.artefactplus.com/signup.php";
+    public static final String UPLOAD_USER_PIC_URL = "http://tolet.artefactplus.com/upload.php";
     public static final String POST_COMMENT_URL = "http://tolet.artefactplus.com/comment.php";
     public static final String FETCH_COMMENT_URL = "http://tolet.artefactplus.com/populatecomment.php";
     public static final String LOGIN_URL = "http://tolet.artefactplus.com/login.php";
