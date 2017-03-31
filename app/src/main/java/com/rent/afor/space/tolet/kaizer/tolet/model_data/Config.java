@@ -10,10 +10,12 @@ public class Config {
     public static final String SP_USERNAME = "username";
     public static final String SP_LOGED_IN = "login";
     public static final String SP_TOLET_APP = "sp_tolet_app";
+    public static final String SP_USER_IMAGE = "sp_user_iamge";
 
     public static final String JSON_ARRAY = "job_post";
     public static final String COMMENT_ARRAY = "comments";
     public static final String PROFILE_TIMELINE_ARRAY = "user_timeline_post";
+    public static final String USER_LOGIN_INFO = "user_login_info";
 
     public static final String COMMENT_CONTENT = "comment";
 

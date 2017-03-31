@@ -2,6 +2,9 @@ package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +14,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentActivity;
 import android.transition.Slide;
 import android.transition.TransitionManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -32,6 +36,14 @@ import com.android.volley.toolbox.Volley;
 import com.rent.afor.space.tolet.kaizer.tolet.R;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.Config;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -49,8 +61,8 @@ public class LoginSignupActivity extends FragmentActivity {
     EditText emailLogin, passwordLogin, userNameSignup, emailSignup, passwordSignup, rePasswordSignup, phoneNumberSighup;
     Button loginBtn, createAccountSignup;
     ProgressBar loginProgressBar, sighupProgressBar;
-
     LinearLayout loginContainer;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,13 +222,14 @@ public class LoginSignupActivity extends FragmentActivity {
 
                         if (!response.trim().equals("fail")) {
 
-                            if (storeValueInSharedPreference(email, response)) {
-
-                                loginProgressBar.setVisibility(View.GONE);
-                                loginBtn.setVisibility(View.VISIBLE);
-                                startDashBoard();
-
+                            try {
+                                userInfo(response, email);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
+
 
                         } else {
 
@@ -252,15 +265,15 @@ public class LoginSignupActivity extends FragmentActivity {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
-
     }
 
-    private boolean storeValueInSharedPreference(String email, String userName) {
+    private boolean storeValueInSharedPreference(String email, String userName, String image) {
 
-        SharedPreferences sp = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+        sp = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(Config.SP_LOGED_IN, true);
         editor.putString(Config.SP_EMAIL, email);
+        editor.putString(Config.SP_USER_IMAGE, image);
         editor.putString(Config.SP_USERNAME, userName);
         return editor.commit();
 
@@ -338,9 +351,9 @@ public class LoginSignupActivity extends FragmentActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
 
-                        if (response.equals("success")) {
+                        if (!response.equals("fail")) {
 
-                            if (storeValueInSharedPreference(email, userName)) {
+                            if (storeValueInSharedPreference(email, userName, response)) {
 
                                 createAccountSignup.setVisibility(View.VISIBLE);
                                 sighupProgressBar.setVisibility(View.GONE);
@@ -380,6 +393,34 @@ public class LoginSignupActivity extends FragmentActivity {
 
     }
 
+    private void userInfo(String response, String email) throws JSONException, IOException {
+
+        JSONObject jsonObject = new JSONObject(response);
+        JSONArray result = jsonObject.getJSONArray(Config.USER_LOGIN_INFO);
+
+        /*Log.v("result", "value : " + response);*/
+
+        for (int i = 0; i < result.length(); i++) {
+
+            JSONObject json = result.getJSONObject(i);
+
+            /*Log.v("Image : ", "" + d);*/
+
+            FetchUserImage fetchUserImage = new FetchUserImage();
+            fetchUserImage.execute(email, json.optString(Config.KEY_USERNAME), json.optString(Config.KEY_USER_IMAGE));
+
+        }
+
+    }
+
+    public String getStringImage(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
     //function for email validation;
     private boolean isValidEmailId(String email) {
 
@@ -391,4 +432,40 @@ public class LoginSignupActivity extends FragmentActivity {
                 + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
     }
 
+    private class FetchUserImage extends AsyncTask<String, Void, Bitmap> {
+
+        Bitmap bitmap;
+        String email;
+        String userName;
+
+        public FetchUserImage() {
+            super();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            try {
+                bitmap = BitmapFactory.decodeStream((InputStream) new URL(params[2]).getContent());
+                email = params[0];
+                userName = params[1];
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if (storeValueInSharedPreference(email, userName, getStringImage(bitmap))) {
+
+                loginProgressBar.setVisibility(View.GONE);
+                loginBtn.setVisibility(View.VISIBLE);
+                startDashBoard();
+
+            }
+        }
+    }
 }
+

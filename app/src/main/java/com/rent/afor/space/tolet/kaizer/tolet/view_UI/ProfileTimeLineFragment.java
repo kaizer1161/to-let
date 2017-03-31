@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -77,6 +78,14 @@ public class ProfileTimeLineFragment extends Fragment {
 
         sharedPreferences = getContext().getSharedPreferences(Config.SP_TOLET_APP, Context.MODE_PRIVATE);
         userName.setText(sharedPreferences.getString(Config.SP_USERNAME, ""));
+
+        if (!sharedPreferences.getString(Config.SP_USER_IMAGE, "").equals(null)) {
+
+            byte[] decodedString = Base64.decode(sharedPreferences.getString(Config.SP_USER_IMAGE, ""), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            userImage.setImageBitmap(decodedByte);
+
+        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -208,8 +217,8 @@ public class ProfileTimeLineFragment extends Fragment {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 userImage.setImageBitmap(bitmap);
-
                 uploadImage();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -240,8 +249,15 @@ public class ProfileTimeLineFragment extends Fragment {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
 
-                        if (response.equals("success"))
+                        if (response.equals("success")) {
                             Toast.makeText(getContext(), "" + response, Toast.LENGTH_LONG).show();
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(Config.SP_USER_IMAGE, image);
+                            editor.commit();
+
+                            /*Log.v("Set image : ", "" + !sharedPreferences.getString(Config.SP_USER_IMAGE, "").equals(null));*/
+                        }
 
                     }
                 }, new Response.ErrorListener() {

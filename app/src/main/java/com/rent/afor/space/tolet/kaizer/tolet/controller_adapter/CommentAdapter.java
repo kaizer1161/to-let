@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.rent.afor.space.tolet.kaizer.tolet.R;
 import com.rent.afor.space.tolet.kaizer.tolet.model_data.CommentContent;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentA
     public void onBindViewHolder(CommentAdapter.CommentAdapterHolder holder, int position) {
 
         CommentContent item = comment.get(position);
+
+        if (!item.getUserPic().equals(""))
+            Picasso.with(context).load(item.getUserPic()).into(holder.userPic);
 
         holder.userName.setText(item.getUserName());
         holder.dateAndTime.setText(item.getDateAndTime());
@@ -77,7 +81,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentA
 
         private void initFeedViews(View itemView) {
 
-            userPic = (ImageView) itemView.findViewById(R.id.user_pro_pic_id);
+            userPic = (ImageView) itemView.findViewById(R.id.feed_comment_user_pro_pic_id);
             userName = (TextView) itemView.findViewById(R.id.feed_comment_user_name_feed_id);
             dateAndTime = (TextView) itemView.findViewById(R.id.feed_comment_date_and_time_of_feed_id);
             comment = (TextView) itemView.findViewById(R.id.feed_comment_content_text_view_id);

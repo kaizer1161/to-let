@@ -3,6 +3,8 @@ package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +70,8 @@ public class DashBoard extends AppCompatActivity
 
     private EditText commentEditText;
 
+    private RecyclerView recyclerViewComment;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -89,7 +94,11 @@ public class DashBoard extends AppCompatActivity
         /*Local variables*/
         sharedPreferences = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
         TextView userName = (TextView) findViewById(R.id.nav_bar_user_name_id);
+        ImageView userImage = (ImageView) findViewById(R.id.nav_bar_user_image_id);
         commentEditText = (EditText) findViewById(R.id.comment_edit_text_id);
+
+        commentEditText.setVisibility(View.GONE);
+
         ImageView commentSendBtn = (ImageView) findViewById(R.id.comment_send_btn_id);
 
         CoordinatorLayout commentCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.dash_board_coordinator_layout);
@@ -102,6 +111,12 @@ public class DashBoard extends AppCompatActivity
 
         behaviorBottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
         userName.setText(sharedPreferences.getString(Config.SP_USERNAME, ""));
+
+        if (!sharedPreferences.getString(Config.SP_USER_IMAGE, "").equals(null)) {
+            byte[] decodedString = Base64.decode(sharedPreferences.getString(Config.SP_USER_IMAGE, ""), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            userImage.setImageBitmap(decodedByte);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -144,8 +159,10 @@ public class DashBoard extends AppCompatActivity
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
+                commentEditText.setVisibility(View.VISIBLE);
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     showFloatingActionButton();
+                    commentEditText.setVisibility(View.GONE);
                 }
 
             }
@@ -279,10 +296,12 @@ public class DashBoard extends AppCompatActivity
         ArrayList<CommentContent> comment = new ArrayList<>();
         comment.add(new CommentContent("", " ", " ", " "));
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.comment_bottomSheet_recycler_view_id);
-        recyclerView.setLayoutManager(new LinearLayoutManager(DashBoard.this));
+        recyclerViewComment = (RecyclerView) findViewById(R.id.comment_bottomSheet_recycler_view_id);
+        recyclerViewComment.setLayoutManager(new LinearLayoutManager(DashBoard.this));
         commentAdapter = new CommentAdapter(DashBoard.this, comment, postId);
-        recyclerView.setAdapter(commentAdapter);
+        recyclerViewComment.setAdapter(commentAdapter);
+
+        recyclerViewComment.setVisibility(View.GONE);
 
     }
 
@@ -346,10 +365,13 @@ public class DashBoard extends AppCompatActivity
 
             JSONObject json = result.getJSONObject(i);
 
-            feed[i] = new CommentContent("", json.optString(Config.KEY_USERNAME), json.optString(Config.STATUS_TIME),
+            feed[i] = new CommentContent(json.optString(Config.KEY_USER_IMAGE), json.optString(Config.KEY_USERNAME), json.optString(Config.STATUS_TIME),
                     json.optString(Config.COMMENT_CONTENT));
 
+
         }
+
+        recyclerViewComment.setVisibility(View.VISIBLE);
 
         return feed;
 
