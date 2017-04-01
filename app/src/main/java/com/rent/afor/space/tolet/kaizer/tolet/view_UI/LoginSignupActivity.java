@@ -54,15 +54,15 @@ import java.util.regex.Pattern;
 
 public class LoginSignupActivity extends FragmentActivity {
 
-    TextView createNewAccountBottomSheet;
-    CoordinatorLayout loginSignupCoordinatorLayout;
-    View bottomSheet;
-    BottomSheetBehavior<View> behaviorBottomSheet;
-    EditText emailLogin, passwordLogin, userNameSignup, emailSignup, passwordSignup, rePasswordSignup, phoneNumberSighup;
-    Button loginBtn, createAccountSignup;
-    ProgressBar loginProgressBar, sighupProgressBar;
-    LinearLayout loginContainer;
-    private SharedPreferences sp;
+    /**
+     * All class variables
+     */
+    private TextView createNewAccountBottomSheet;
+    private BottomSheetBehavior<View> behaviorBottomSheet;
+    private EditText emailLogin, passwordLogin, userNameSignup, emailSignup, passwordSignup, rePasswordSignup, phoneNumberSighup;
+    private Button loginBtn, createAccountSignup;
+    private ProgressBar loginProgressBar, sighupProgressBar;
+    private LinearLayout loginContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,8 +162,8 @@ public class LoginSignupActivity extends FragmentActivity {
         passwordLogin = (EditText) findViewById(R.id.password_login_edit_text_id);
 
         createNewAccountBottomSheet = (TextView) findViewById(R.id.login_create_new_account_bottom_sheet);
-        loginSignupCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.login_signup_coordinator_layout);
-        bottomSheet = loginSignupCoordinatorLayout.findViewById(R.id.fl_bottomSheet);
+        CoordinatorLayout loginSignupCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.login_signup_coordinator_layout);
+        View bottomSheet = loginSignupCoordinatorLayout.findViewById(R.id.fl_bottomSheet);
         behaviorBottomSheet = BottomSheetBehavior.from(bottomSheet);
 
         loginProgressBar = (ProgressBar) findViewById(R.id.login_progress_view_id);
@@ -269,7 +269,7 @@ public class LoginSignupActivity extends FragmentActivity {
 
     private boolean storeValueInSharedPreference(String email, String userName, String image) {
 
-        sp = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(Config.SP_TOLET_APP, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(Config.SP_LOGED_IN, true);
         editor.putString(Config.SP_EMAIL, email);

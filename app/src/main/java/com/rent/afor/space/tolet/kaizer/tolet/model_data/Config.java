@@ -44,7 +44,6 @@ public class Config {
     public static final String KEY_POST_ID = "id";
     public static final String KEY_COMMENT_POST_ID = "post_id";
 
-
     /*
     *  All php wed links
     */
