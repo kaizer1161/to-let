@@ -1,6 +1,8 @@
 package com.rent.afor.space.tolet.kaizer.tolet.controller_adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by kaizer on 3/6/17.
+ * Adapter to populate feed content to its corresponding layout.
  */
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHolder> {
@@ -59,6 +61,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
         holder.otherInfo.setText(item.getOtherInfo());
         holder.flatAvailableTime.setText(item.getFlatAvailableTime());
         holder.postId = item.getPostId();
+        holder.phoneNumber = item.getPhoneNumber();
 
     }
 
@@ -78,12 +81,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
 
     class FeedAdapterHolder extends RecyclerView.ViewHolder {
 
-
         private ImageView userPic;
         private TextView userName, dateAndTime, priceOfFlat, sizeOfFlat, noOfBed, noOfBath, floorNo, addressOfFlat, otherInfo, flatAvailableTime;
         private LinearLayout callBtn, commentBtn;
 
-        private String postId;
+        private String postId, phoneNumber;
 
         FeedAdapterHolder(View itemView) {
             super(itemView);
@@ -93,6 +95,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
             callBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + phoneNumber));
+                    context.startActivity(callIntent);
 
                 }
             });

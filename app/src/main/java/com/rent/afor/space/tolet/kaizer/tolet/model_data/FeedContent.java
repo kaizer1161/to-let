@@ -6,20 +6,9 @@ package com.rent.afor.space.tolet.kaizer.tolet.model_data;
 
 public class FeedContent {
 
-    private String userPic;
-    private String userName;
-    private String dateAndTime;
-    private String priceOfFlat;
-    private String sizeOfFlat;
-    private String noOfBed;
-    private String noOfBath;
-    private String floorNo;
-    private String addressOfFlat;
-    private String otherInfo;
-    private String postId;
-    private String flatAvailableTime;
+    private String userPic, userName, dateAndTime, priceOfFlat, sizeOfFlat, noOfBed, noOfBath, floorNo, addressOfFlat, otherInfo, postId, flatAvailableTime, phoneNumber;
 
-    public FeedContent(String userPic, String userName, String dateAndTime, String priceOfFlat, String sizeOfFlat, String noOfBed, String noOfBath, String floorNo, String addressOfFlat, String otherInfo, String postId, String flatAvailableTime) {
+    public FeedContent(String userPic, String userName, String dateAndTime, String priceOfFlat, String sizeOfFlat, String noOfBed, String noOfBath, String floorNo, String addressOfFlat, String otherInfo, String postId, String flatAvailableTime, String phoneNumber) {
 
         this.userPic = userPic;
         this.userName = userName;
@@ -33,6 +22,7 @@ public class FeedContent {
         this.otherInfo = otherInfo;
         this.postId = postId;
         this.flatAvailableTime = flatAvailableTime;
+        this.phoneNumber = phoneNumber;
 
 
     }
@@ -85,4 +75,7 @@ public class FeedContent {
         return flatAvailableTime;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 }
