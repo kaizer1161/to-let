@@ -35,7 +35,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
 
     private static final String TAG_FEED_FRAGMENT = "feed_fragment";
 
-    private EditText askingPrice, sizeOfFlat, noOfBed, noOfBath, floor, locationOfFlat, additionalInfo;
+    private EditText askingPrice, sizeOfFlat, noOfBed, noOfBath, floor, locationOfFlat, additionalInfo, phoneNumber;
     private DatePicker dateToRent;
 
     public PostFragment() {
@@ -77,6 +77,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
         locationOfFlat = (EditText) rootView.findViewById(R.id.location_post_edit_text_id);
         additionalInfo = (EditText) rootView.findViewById(R.id.additional_info_post_edit_text_id);
         dateToRent = (DatePicker) rootView.findViewById(R.id.date_to_rent_flat_id);
+        phoneNumber = (EditText) rootView.findViewById(R.id.phone_number_post_edit_text_id);
 
     }
 
@@ -107,6 +108,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
         String floorNo = floor.getText().toString().trim();
         String location = locationOfFlat.getText().toString().trim();
         String additional = additionalInfo.getText().toString().trim();
+        String phone = phoneNumber.getText().toString().trim();
 
         int day = dateToRent.getDayOfMonth();
         int month = dateToRent.getMonth() + 1;
@@ -117,51 +119,43 @@ public class PostFragment extends android.support.v4.app.Fragment {
         //condition for validation error message;
         if (price.trim().equals("")) {
 
-            /*createAccountSignup.setVisibility(View.VISIBLE);
-            sighupProgressBar.setVisibility(View.GONE);*/
             askingPrice.setError("Asking price required!");
 
         } else if (size.trim().equals("")) {
 
-            /*createAccountSignup.setVisibility(View.VISIBLE);
-            sighupProgressBar.setVisibility(View.GONE);*/
             sizeOfFlat.setError("Size Of flat required!");
 
         } else if (bed.trim().equals("")) {
 
-            /*createAccountSignup.setVisibility(View.VISIBLE);
-            sighupProgressBar.setVisibility(View.GONE);*/
             noOfBed.setError("No Of bed Required!");
 
         } else if (bath.trim().equals("")) {
 
-            /*createAccountSignup.setVisibility(View.VISIBLE);
-            sighupProgressBar.setVisibility(View.GONE);*/
             noOfBath.setError("No Of bath required!");
 
         } else if (floorNo.trim().equals("")) {
 
-            /*createAccountSignup.setVisibility(View.VISIBLE);
-            sighupProgressBar.setVisibility(View.GONE);*/
             floor.setError("Floor required!");
 
         } else if (location.trim().equals("")) {
 
-            /*createAccountSignup.setVisibility(View.VISIBLE);
-            sighupProgressBar.setVisibility(View.GONE);*/
             locationOfFlat.setError("Location Of flat required!");
+
+        } else if (phone.trim().equals("")) {
+
+            phoneNumber.setError("Phone number is required!");
 
         } else {
 
             SharedPreferences sharedPreferences = getContext().getSharedPreferences(Config.SP_TOLET_APP, Context.MODE_PRIVATE);
 
-            makePost(sharedPreferences.getString(Config.SP_EMAIL, ""), price, size, bed, bath, floorNo, location, additional, date);
+            makePost(sharedPreferences.getString(Config.SP_EMAIL, ""), price, size, bed, bath, floorNo, location, additional, date, phone);
 
         }
 
     }
 
-    private void makePost(final String email, final String price, final String size, final String bed, final String bath, final String floorNo, final String location, final String additional, final String date) {
+    private void makePost(final String email, final String price, final String size, final String bed, final String bath, final String floorNo, final String location, final String additional, final String date, final String phone) {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -201,6 +195,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
                 params.put(Config.KEY_LOCATION, location);
                 params.put(Config.KEY_OTHER_INFORMATION, additional);
                 params.put(Config.KEY_RENT_DATE, date);
+                params.put(Config.KEY_USER_PHONE, phone);
                 return params;
             }
         };

@@ -1,5 +1,7 @@
 package com.rent.afor.space.tolet.kaizer.tolet.view_UI;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,7 +39,7 @@ public class ProfilePersonalInfo extends Fragment implements View.OnClickListene
 
     private ImageView personalInfoEdit, personalInfoSave, passwordEdit, passwordSave;
     private EditText userName, phoneNumber, oldPassword, newPassword, confirmPassword;
-    private String userOldPassword;
+    private String email;
 
     public ProfilePersonalInfo() {
 
@@ -50,6 +52,10 @@ public class ProfilePersonalInfo extends Fragment implements View.OnClickListene
 
         initLayout(rootView);
 
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(Config.SP_TOLET_APP, Context.MODE_PRIVATE);
+        email = sharedPreferences.getString(Config.SP_EMAIL, "");
+
+        fetchUserInfo(email);
 
         return rootView;
     }
@@ -109,6 +115,7 @@ public class ProfilePersonalInfo extends Fragment implements View.OnClickListene
             personalInfoEdit.setVisibility(View.VISIBLE);
             personalInfoSave.setVisibility(View.GONE);
             editTextPersonalInfoSelection(false);
+            updateUserInfo(email, userName.getText().toString(), phoneNumber.getText().toString());
 
         } else if (v == passwordEdit) {
 
@@ -122,6 +129,20 @@ public class ProfilePersonalInfo extends Fragment implements View.OnClickListene
             passwordSave.setVisibility(View.GONE);
             editTextPasswordSelection(false);
 
+            if (newPassword.getText().toString().equals(confirmPassword.getText().toString()) && newPassword.getText().toString().length() >= 6 && confirmPassword.getText().toString().length() >= 6) {
+
+                updatePassword(email, oldPassword.getText().toString(), newPassword.getText().toString());
+
+            } else {
+
+                oldPassword.setError("Password miss match/min 6 length");
+                newPassword.setError("Password miss match/min 6 length");
+                confirmPassword.setError("Password miss match/min 6 length");
+
+            }
+
+
+
         }
 
     }
@@ -130,7 +151,7 @@ public class ProfilePersonalInfo extends Fragment implements View.OnClickListene
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = Config.LOGIN_URL;
+        String url = Config.PROFILE_FETCH_PERSONAL_INFO;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -186,11 +207,98 @@ public class ProfilePersonalInfo extends Fragment implements View.OnClickListene
 
             userName.setText(json.optString(Config.KEY_USERNAME));
             phoneNumber.setText(json.optString(Config.KEY_USER_PHONE));
-            userOldPassword = json.optString(Config.KEY_USER_PASSWORD);
 
         }
 
     }
 
+    private void updateUserInfo(final String email, final String userName, final String phone) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = Config.PROFILE_UPDATE_PERSONAL_INFO;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        if (response.equals("success")) {
+
+                            Toast.makeText(getContext(), "" + response, Toast.LENGTH_LONG).show();
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(), "Error : " + error, Toast.LENGTH_LONG).show();
+            }
+
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(Config.KEY_USER_EMAIL, email);
+                params.put(Config.KEY_USER_PHONE, phone);
+                params.put(Config.KEY_USERNAME, userName);
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
+    private void updatePassword(final String email, final String oldPassword, final String newPassword) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = Config.PROFILE_UPDATE_PASSWORD;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        if (response.equals("success")) {
+
+                            Toast.makeText(getContext(), "" + response, Toast.LENGTH_LONG).show();
+
+                        } else
+                            Toast.makeText(getContext(), "Password mismatch", Toast.LENGTH_LONG).show();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(), "Error : " + error, Toast.LENGTH_LONG).show();
+            }
+
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Config.KEY_USER_EMAIL, email);
+                params.put(Config.KEY_USER_PASSWORD, oldPassword);
+                params.put(Config.KEY_USER_NEW_PASSWORD, newPassword);
+                return params;
+            }
+
+        };
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
 
 }

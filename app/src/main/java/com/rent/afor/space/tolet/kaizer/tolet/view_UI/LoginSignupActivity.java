@@ -355,9 +355,10 @@ public class LoginSignupActivity extends FragmentActivity {
 
                             if (storeValueInSharedPreference(email, userName, response)) {
 
+                                FetchUserImage fetchUserImage = new FetchUserImage();
+                                fetchUserImage.execute(email, userName, response);
                                 createAccountSignup.setVisibility(View.VISIBLE);
                                 sighupProgressBar.setVisibility(View.GONE);
-                                startDashBoard();
 
                             }
 
@@ -408,6 +409,8 @@ public class LoginSignupActivity extends FragmentActivity {
 
             FetchUserImage fetchUserImage = new FetchUserImage();
             fetchUserImage.execute(email, json.optString(Config.KEY_USERNAME), json.optString(Config.KEY_USER_IMAGE));
+            loginProgressBar.setVisibility(View.GONE);
+            loginBtn.setVisibility(View.VISIBLE);
 
         }
 
@@ -460,8 +463,6 @@ public class LoginSignupActivity extends FragmentActivity {
 
             if (storeValueInSharedPreference(email, userName, getStringImage(bitmap))) {
 
-                loginProgressBar.setVisibility(View.GONE);
-                loginBtn.setVisibility(View.VISIBLE);
                 startDashBoard();
 
             }
