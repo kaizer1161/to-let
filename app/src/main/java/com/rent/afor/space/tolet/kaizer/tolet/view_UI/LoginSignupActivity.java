@@ -78,11 +78,15 @@ public class LoginSignupActivity extends FragmentActivity {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
-                Slide slide = new Slide();
-                slide.setSlideEdge(Gravity.TOP);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
 
-                ViewGroup root = (ViewGroup) findViewById(R.id.login_signup_coordinator_layout);
-                TransitionManager.beginDelayedTransition(root, slide);
+                    Slide slide = new Slide();
+                    slide.setSlideEdge(Gravity.TOP);
+
+                    ViewGroup root = (ViewGroup) findViewById(R.id.login_signup_coordinator_layout);
+                    TransitionManager.beginDelayedTransition(root, slide);
+
+                }
 
                 bottomSheetEditTextVisibility("visible");
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED)

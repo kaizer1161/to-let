@@ -84,7 +84,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedAdapterHol
         private ImageView userPic;
         private TextView userName, dateAndTime, priceOfFlat, sizeOfFlat, noOfBed, noOfBath, floorNo, addressOfFlat, otherInfo, flatAvailableTime;
         private LinearLayout callBtn, commentBtn;
-
         private String postId, phoneNumber;
 
         FeedAdapterHolder(View itemView) {

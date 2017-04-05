@@ -22,7 +22,7 @@
     <string name="location">Location :</string>
     <string name="other_info">Other Information :</string>
     <string name="hint_asking_price">Asking price of flat</string>
-    <string name="hint_size_of_flat">Size of flat</string>
+    <string name="hint_size_of_flat">Size of flat in Sq Feet</string>
     <string name="hint_no_of_bed">No of bed in flat</string>
     <string name="hint_no_of_bath">No of bath in flat</string>
     <string name="hint_floor_of_flat">Floor</string>
