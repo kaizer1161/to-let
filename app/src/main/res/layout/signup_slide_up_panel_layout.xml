@@ -145,12 +145,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <Button
+            <TextView
                 android:id="@+id/create_account_Btn_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
+                android:gravity="center"
                 android:onClick="loginSignupBtnClicked"
-                android:text="@string/create_account" />
+                android:text="@string/create_account"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
         </RelativeLayout>
 

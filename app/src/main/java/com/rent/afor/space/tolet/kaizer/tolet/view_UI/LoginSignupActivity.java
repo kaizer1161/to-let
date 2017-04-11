@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -60,7 +59,7 @@ public class LoginSignupActivity extends FragmentActivity {
     private TextView createNewAccountBottomSheet;
     private BottomSheetBehavior<View> behaviorBottomSheet;
     private EditText emailLogin, passwordLogin, userNameSignup, emailSignup, passwordSignup, rePasswordSignup, phoneNumberSighup;
-    private Button loginBtn, createAccountSignup;
+    private TextView loginBtn, createAccountSignup;
     private ProgressBar loginProgressBar, sighupProgressBar;
     private LinearLayout loginContainer;
 
@@ -147,7 +146,7 @@ public class LoginSignupActivity extends FragmentActivity {
         rePasswordSignup = (EditText) findViewById(R.id.signup_Password_ReEnter_EditText_id);
         phoneNumberSighup = (EditText) findViewById(R.id.size_of_flat_post_edit_text_id);
 
-        createAccountSignup = (Button) findViewById(R.id.create_account_Btn_id);
+        createAccountSignup = (TextView) findViewById(R.id.create_account_Btn_id);
 
         sighupProgressBar = (ProgressBar) findViewById(R.id.sign_up_progress_bar_id);
 
@@ -160,7 +159,7 @@ public class LoginSignupActivity extends FragmentActivity {
 
         loginContainer = (LinearLayout) findViewById(R.id.login_view_container_id);
 
-        loginBtn = (Button) findViewById(R.id.loginBtn_id);
+        loginBtn = (TextView) findViewById(R.id.loginBtn_id);
 
         emailLogin = (EditText) findViewById(R.id.email_login_EditText_id);
         passwordLogin = (EditText) findViewById(R.id.password_login_edit_text_id);

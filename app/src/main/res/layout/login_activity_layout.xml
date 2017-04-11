@@ -82,13 +82,15 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/password_login_text_input_layout" />
 
-            <Button
+            <TextView
                 android:id="@+id/loginBtn_id"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@+id/password_login_text_input_layout"
+                android:gravity="center"
                 android:onClick="loginSignupBtnClicked"
-                android:text="@string/login" />
+                android:text="@string/login"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
 
         </RelativeLayout>
