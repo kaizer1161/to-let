@@ -112,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_phone_number"
-                android:inputType="textAutoCorrect"
+                android:inputType="number"
                 android:maxLength="30"
                 android:paddingBottom="16dp"
                 android:textColorHint="@color/colorAccent" />
